@@ -1,0 +1,86 @@
+solid Centered xyz
+ facet normal 200 200 0
+  outer loop
+   vertex -10 10 10
+   vertex 10 -10 10
+   vertex 10 10 10
+  endloop
+ endfacet
+ facet normal -200 -200 0
+  outer loop
+   vertex 10 -10 10
+   vertex -10 10 10
+   vertex -10 -10 10
+  endloop
+ endfacet
+ facet normal 200 -200 0
+  outer loop
+   vertex -10 -10 -10
+   vertex 10 10 -10
+   vertex 10 -10 -10
+  endloop
+ endfacet
+ facet normal -200 200 0
+  outer loop
+   vertex 10 10 -10
+   vertex -10 -10 -10
+   vertex -10 10 -10
+  endloop
+ endfacet
+ facet normal -200 0 200
+  outer loop
+   vertex -10 -10 -10
+   vertex 10 -10 10
+   vertex -10 -10 10
+  endloop
+ endfacet
+ facet normal 200 0 -200
+  outer loop
+   vertex 10 -10 10
+   vertex -10 -10 -10
+   vertex 10 -10 -10
+  endloop
+ endfacet
+ facet normal 0 200 200
+  outer loop
+   vertex 10 -10 10
+   vertex 10 10 -10
+   vertex 10 10 10
+  endloop
+ endfacet
+ facet normal 0 -200 -200
+  outer loop
+   vertex 10 10 -10
+   vertex 10 -10 10
+   vertex 10 -10 -10
+  endloop
+ endfacet
+ facet normal 200 0 200
+  outer loop
+   vertex 10 10 -10
+   vertex -10 10 10
+   vertex 10 10 10
+  endloop
+ endfacet
+ facet normal -200 0 -200
+  outer loop
+   vertex -10 10 10
+   vertex 10 10 -10
+   vertex -10 10 -10
+  endloop
+ endfacet
+ facet normal 0 200 -200
+  outer loop
+   vertex -10 -10 -10
+   vertex -10 10 10
+   vertex -10 10 -10
+  endloop
+ endfacet
+ facet normal 0 -200 200
+  outer loop
+   vertex -10 10 10
+   vertex -10 -10 -10
+   vertex -10 -10 10
+  endloop
+ endfacet
+endsolid Centered xyz
