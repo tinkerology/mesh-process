@@ -10,7 +10,7 @@ exports.command = 'center [location] [infile] [outfile]'
 exports.desc = 'Center the specified STL file'
 exports.builder = {
   location: {
-    choices: ['x', 'xy', 'xyz', 'xz', 'yz'] as const,
+    choices: ['xyz', 'x', 'y', 'z', 'xy', 'xz', 'yz'] as const,
     default: 'xyz',
     description: 'Center the STL file'
   },
