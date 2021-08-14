@@ -16,7 +16,7 @@ exports.builder = {
     description: 'Y axis translation'
   },
   z: {
-    default: 0,
+    default: 0  ,
     description: 'Z axis translation'
   },
   infile: {
