@@ -1,7 +1,13 @@
 # mesh-process
 
+# H1 Purpose
 STL file reader/writer and mesh processing library
 
+# H1 Building
+
+yarn build
+
+# H1 Syntax
 ```
 $ node meshtool 
 meshtool <command>
@@ -37,4 +43,10 @@ Commands:
 Options:
   --version  Show version number                                       [boolean]
   --help     Show help                                                 [boolean]
+```
+
+# H1 Examples
+
+```
+node meshtool stats ../Samples/Cube.stl
 ```
