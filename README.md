@@ -45,7 +45,7 @@ Options:
   --help     Show help                                                 [boolean]
 ```
 
-# H1 Examples
+## Examples
 
 ```
 node meshtool stats ../Samples/Cube.stl
