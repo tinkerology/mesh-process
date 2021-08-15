@@ -1,13 +1,13 @@
 # mesh-process
 
-# H1 Purpose
+## Purpose
 STL file reader/writer and mesh processing library
 
-# H1 Building
+## Building
 
 yarn build
 
-# H1 Syntax
+## Syntax
 ```
 $ node meshtool 
 meshtool <command>
