@@ -47,6 +47,15 @@ Options:
 
 ## Examples
 
+Get statistics for the sample Cube.stl:
 ```
 node meshtool stats ../Samples/Cube.stl
 ```
+
+Translate Cube.stl by x+=10, y+=10, z+=10 and save in xCube101010.stl
+```
+node meshtool translate 10 10 10 ../Samples/Cube.stl ../Samples/xCube101010.stl
+```
+
+
+
