@@ -4,21 +4,13 @@ import { MeshInterface } from "../lib/mesh";
 import { MeshOperations } from "../lib/mesh";
 import { STLFile } from "../lib/stlfile";
 
-exports.command = 'crop [location] [infile] [outfile] [minx] [miny] [minz] [maxx] [maxy] [maxz]'
+exports.command = 'crop [location] [minx] [miny] [minz] [maxx] [maxy] [maxz] [infile] [outfile] '
 exports.desc = 'Crop the specified STL file'
 exports.builder = {
   location: {
     choices: ['inside', 'outside'] as const,
     default: 'inside',
     description: 'Whether to save vertices inside the bounding box our outside'
-  },
-  infile: {
-    default: '',
-    demandOption: true
-  },
-  outfile: {
-    default: '',
-    demandOption: true
   },
   minx: {
     default: Number.MIN_SAFE_INTEGER
@@ -37,6 +29,14 @@ exports.builder = {
   },
   maxz: {
     default: Number.MAX_SAFE_INTEGER
+  },
+  infile: {
+    default: '',
+    demandOption: true
+  },
+  outfile: {
+    default: '',
+    demandOption: true
   }
 }
 exports.handler = function (argv:any) {
