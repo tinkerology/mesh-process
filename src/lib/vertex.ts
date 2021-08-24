@@ -12,6 +12,7 @@ export interface VertexInterface {
 
     distance( v: VertexInterface) : number;
 
+    mirror(x:boolean, y:boolean, z:boolean) : VertexInterface;
     scale(v : VertexInterface) : VertexInterface;
     add(v : VertexInterface) : VertexInterface;
     equal(v : VertexInterface) : boolean;
@@ -53,6 +54,10 @@ export class Vertex implements VertexInterface {
 
     add(v : VertexInterface) : VertexInterface {
         return new Vertex(this.x+v.x, this.y+v.y, this.z+v.z);
+    }
+
+    mirror(x:boolean, y:boolean, z:boolean) : VertexInterface {
+        return new Vertex(x ? -1 * this.x : this.x, y ? -1 * this.y : this.y, z ? -1 * this.z : this.z);
     }
 
     equal(v : VertexInterface) : boolean {
