@@ -328,7 +328,7 @@ export class MeshOperations {
             combinedMesh.addMesh(translatedMesh);
 
             // Move along X axis
-            xOffset + (extents.maxx - extents.minx) + xSpacing;
+            xOffset += (extents.maxx - extents.minx) + xSpacing;
 
             // See if we're at the end of an X axis row
             xIndex++;
