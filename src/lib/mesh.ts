@@ -52,6 +52,8 @@ export interface MeshInterface {
     triangles : TriangleInterface[];
 
     addTriangle(triangle : TriangleInterface) : MeshInterface;
+
+    addMesh(mesh : MeshInterface) : MeshInterface;
 }
 
 export class Mesh implements MeshInterface {
@@ -63,6 +65,11 @@ export class Mesh implements MeshInterface {
 
     addTriangle(triangle : TriangleInterface) : MeshInterface {
         this.triangles.push(triangle);
+        return this;
+    }
+
+    addMesh(mesh : MeshInterface) : MeshInterface {
+        this.triangles.push(...mesh.triangles);
         return this;
     }
 } 
@@ -247,6 +254,19 @@ export class MeshOperations {
         return scene;
     }
 
+    static mirror(mesh:MeshInterface, x:boolean, y:boolean, z:boolean) : MeshInterface {
+        let mirroredMesh:MeshInterface = new Mesh();
+        mesh.triangles.forEach( (triangle:TriangleInterface) => {
+            mirroredMesh.addTriangle(new Triangle(
+                                            triangle.v1.mirror(x,y,z),
+                                            triangle.v2.mirror(x,y,z),
+                                            triangle.v3.mirror(x,y,z))
+            );
+        });
+        return mirroredMesh;
+    }
+
+
     static translate(mesh:MeshInterface, offset:VertexInterface) : MeshInterface {
         let translatedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
@@ -288,6 +308,38 @@ export class MeshOperations {
             flippedMesh.addTriangle(triangle.flipNormal());
         });
         return flippedMesh;
+    }
+
+    static replicate(mesh:MeshInterface,
+                     xCount:number,
+                     xSpacing:number, ySpacing:number,
+                     totalCount:number) : MeshInterface {
+        // Copy mesh by making new mesh with duplicate triangles
+        let combinedMesh:MeshInterface = new Mesh();
+        combinedMesh.addMesh(mesh);
+
+        let extents:MeshExtents = MeshInfo.getExtents(mesh);
+        let xOffset = (extents.maxx - extents.minx) + xSpacing;
+        let yOffset = 0;
+        let xIndex = 1;
+        totalCount--;
+        while (totalCount > 0) {
+            let translatedMesh = MeshOperations.translate(mesh, new Vertex(xOffset, yOffset, 0) );
+            combinedMesh.addMesh(translatedMesh);
+
+            // Move along X axis
+            xOffset + (extents.maxx - extents.minx) + xSpacing;
+
+            // See if we're at the end of an X axis row
+            xIndex++;
+            if ( xIndex >= xCount ) {
+                xOffset = 0;
+                yOffset += (extents.maxy - extents.miny) + ySpacing;
+                xIndex = 0;
+            }
+            totalCount--;
+        }
+        return combinedMesh;
     }
 
     static addVerticalTriangles(mesh:MeshInterface, edges:Edge[], z:number) {
