@@ -302,6 +302,34 @@ export class MeshOperations {
         return scaledMesh;
     }
 
+    static scaleToSize(mesh:MeshInterface, axisName:string, size:number) {
+        let extents:MeshExtents = MeshInfo.getExtents(mesh);
+
+        let xScale:number = 1;
+        let yScale:number = 1;
+        let zScale:number = 1;
+    
+        let axis:string = axisName;
+        axis = axis.toLowerCase();
+        if ( axis === 'x' ) {
+          xScale = size / (extents.maxx - extents.minx);
+          yScale = xScale;
+          zScale = xScale;
+        }
+        else if ( axis === 'y' ) {
+          yScale = size / (extents.maxy - extents.miny);
+          xScale = yScale;
+          zScale = yScale;
+        }
+        else if ( axis === 'z' ) {
+          zScale = size / (extents.maxz - extents.minz);
+          xScale = zScale;
+          yScale = zScale;
+        }
+        let scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(xScale, yScale, zScale));
+        return scaledMesh;
+    }
+    
     static flipNormals(mesh:MeshInterface) : MeshInterface {
         let flippedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
@@ -318,11 +346,15 @@ export class MeshOperations {
         let combinedMesh:MeshInterface = new Mesh();
         combinedMesh.addMesh(mesh);
 
+        // Figure out spacing and initial placement
         let extents:MeshExtents = MeshInfo.getExtents(mesh);
         let xOffset = (extents.maxx - extents.minx) + xSpacing;
         let yOffset = 0;
         let xIndex = 1;
+        // Subtract off the original copy of the mesh fromt he total
         totalCount--;
+
+        // Keep going until we place all the copies
         while (totalCount > 0) {
             let translatedMesh = MeshOperations.translate(mesh, new Vertex(xOffset, yOffset, 0) );
             combinedMesh.addMesh(translatedMesh);
