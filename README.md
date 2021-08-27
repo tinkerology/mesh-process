@@ -35,6 +35,9 @@ Commands:
   [ySpacing] [totalCount] [infile]          a grid
   [outfile]
 
+  meshtool scale-to-size [axis] [size]      Scale the specified STL file to
+  [infile] [outfile]                        [size] along the [axis]
+  
   meshtool scale [x] [y] [z] [infile]       Scale the specified STL file
   [outfile]
 
