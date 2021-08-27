@@ -6,6 +6,7 @@ node_modules
 test
 src/**.js
 src/lib/**.js
+src/lib/__tests__/**.js
 src/cmds/**.js
 coverage
 *.log
