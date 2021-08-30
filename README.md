@@ -18,6 +18,9 @@ Commands:
   meshtool center [location] [infile]       Center the specified STL file
   [outfile]
 
+  meshtool concat [infile1] [infile2]       Add two meshes into one file
+  [outfile]
+
   meshtool crop [location] [minx] [miny]    Crop the specified STL file
   [minz] [maxx] [maxy] [maxz] [infile]
   [outfile]
