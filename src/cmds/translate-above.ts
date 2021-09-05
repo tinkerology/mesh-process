@@ -42,9 +42,6 @@ exports.builder = {
 }
 
 exports.handler = function (argv:any) {
-  console.log("X threshold", argv.xThreshold);
-  console.log("Y threshold", argv.yThreshold);
-  console.log("Z threshold", argv.zThreshold);
   try {
     if ( argv.xThreshold === "-" ) {
       console.log("X threshold set to max");
