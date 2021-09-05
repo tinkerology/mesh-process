@@ -2,6 +2,16 @@
 import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 
+export interface TriangleFilterInterface {
+    filter(vertex : TriangleInterface) : TriangleInterface;
+}
+
+export class TriangleFilterNoOp implements TriangleFilterInterface {
+    filter(triangle : TriangleInterface) : TriangleInterface {
+        return triangle;
+    }
+}
+
 export interface TriangleInterface {
     v1 : VertexInterface;
     v2 : VertexInterface;
