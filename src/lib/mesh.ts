@@ -48,6 +48,25 @@ export class VertexFilterAbove implements VertexFilterInterface {
         return vertex;
     }
 }
+
+export class VertexFilterReplace implements VertexFilterInterface {
+    v1:VertexInterface = new Vertex(0,0,0);
+    v2:VertexInterface = new Vertex(0,0,0);
+
+    constructor(v1:VertexInterface, v2:VertexInterface) {
+        this.v1 = v1;
+        this.v2 = v2;
+    }
+
+    filter(vertex : VertexInterface) : VertexInterface {
+        if ( vertex.x == this.v1.x && vertex.y == this.v1.y && vertex.z == this.v1.z ) {
+            console.log("Replacing vertex: ", vertex);
+            return this.v2;
+        }
+        return vertex;
+    }
+}
+
 export interface MeshInterface {
     triangles : TriangleInterface[];
 
@@ -290,6 +309,17 @@ export class MeshOperations {
         return translatedMesh;
     }
 
+    static filterVertices(mesh:MeshInterface, vertexFilter:VertexFilterInterface) : MeshInterface {
+        let filteredMesh:MeshInterface = new Mesh();
+        mesh.triangles.forEach( (triangle:TriangleInterface) => {
+            filteredMesh.addTriangle(new Triangle(
+                                       vertexFilter.filter(triangle.v1),
+                                       vertexFilter.filter(triangle.v2),
+                                       vertexFilter.filter(triangle.v3) ) );
+        });
+        return filteredMesh;
+    }
+
     static scale(mesh:MeshInterface, scale:VertexInterface) : MeshInterface {
         let scaledMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
@@ -329,7 +359,7 @@ export class MeshOperations {
         let scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(xScale, yScale, zScale));
         return scaledMesh;
     }
-    
+
     static flipNormals(mesh:MeshInterface) : MeshInterface {
         let flippedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
