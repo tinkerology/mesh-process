@@ -49,7 +49,6 @@ exports.handler = function (argv:any) {
     let translatedMesh:MeshInterface = MeshOperations.filterVertices(mesh,
           new VertexFilterReplace(new Vertex(argv.xOrig, argv.yOrig, argv.zOrig),
                                   new Vertex(argv.xNew, argv.yNew, argv.zNew) ) );
-    );
 
     stlFile.writeSTLFile(argv.outfile, "FilterVertexReplace_x" + argv.x + "_y" + argv.y + "_z" + argv.z, translatedMesh);
   }
