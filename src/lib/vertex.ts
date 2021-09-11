@@ -8,6 +8,8 @@ export interface VertexInterface {
 
     clone() : VertexInterface;
 
+    isEqual(v : VertexInterface) : boolean;
+
     isInside(boundingBox:BoundingBox) : boolean;
 
     distance( v: VertexInterface) : number;
@@ -38,6 +40,13 @@ export class Vertex implements VertexInterface {
 
     clone() : VertexInterface {
         return new Vertex(this.x, this.y, this.z);
+    }
+
+    isEqual( v : VertexInterface ) : boolean {
+        if ( v.x === this.x && v.y === this.y && v.z === this.z ) {
+            return true;
+        }
+        return false;
     }
 
     isInside(boundingBox:BoundingBox) : boolean {
