@@ -1,4 +1,5 @@
 
+import { Edge } from "./edge";
 import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 
@@ -20,13 +21,16 @@ export interface TriangleInterface {
 
     clone() : TriangleInterface;
 
+    isEqual(t : TriangleInterface) : boolean;
+    isAdjacent( t : TriangleInterface) : boolean;
+
     calculateNormal() : VertexInterface;
     flipNormal() : TriangleInterface;
     getEdges() : Edge[];
     getCenterCentroid() : VertexInterface;
 }
 
-export class Triangle {
+export class Triangle implements TriangleInterface {
     v1 : VertexInterface = new Vertex(0,0,0);
     v2 : VertexInterface = new Vertex(0,0,0);
     v3 : VertexInterface = new Vertex(0,0,0);
@@ -40,6 +44,45 @@ export class Triangle {
 
     clone() : TriangleInterface {
         return new Triangle(this.v1,this.v2,this.v3);
+    }
+
+    isEqual(t : TriangleInterface) : boolean {
+        // 1,2,3
+        if ( t.v1.isEqual(this.v1) && t.v2.isEqual(this.v2) && t.v3.isEqual(this.v3) ) {
+            return true;
+        }
+        // 1,3,2
+        if ( t.v1.isEqual(this.v1) && t.v2.isEqual(this.v3) && t.v3.isEqual(this.v2) ) {
+            return true;
+        }
+        // 3,2,1
+        if ( t.v1.isEqual(this.v3) && t.v2.isEqual(this.v2) && t.v3.isEqual(this.v1) ) {
+            return true;
+        }
+        // 3,1,2
+        if ( t.v1.isEqual(this.v3) && t.v2.isEqual(this.v1) && t.v3.isEqual(this.v2) ) {
+            return true;
+        }
+        // 2,1,3
+        if ( t.v1.isEqual(this.v2) && t.v2.isEqual(this.v1) && t.v3.isEqual(this.v3) ) {
+            return true;
+        }
+        // 2,3,1
+        if ( t.v1.isEqual(this.v2) && t.v2.isEqual(this.v3) && t.v3.isEqual(this.v1) ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    isAdjacent( t : TriangleInterface) : boolean
+    {
+        // v1/v2, v1/v2
+        if ( this.v1 === t.v1 && this.v2 === t.v2 ) {
+            return true;
+        }
+
+        return false;
     }
 
     toString() : string {
@@ -67,53 +110,6 @@ export class Triangle {
     }
 }
 
-export class Edge {
-    v1 : VertexInterface;
-    v2 : VertexInterface;
-
-    constructor(v1:VertexInterface,v2:VertexInterface) {
-        this.v1 = v1;
-        this.v2 = v2;
-    }
-
-    equal(e:Edge) : boolean {
-        if ( (this.v1.equal(e.v1) && this.v2.equal(e.v2)) ||
-             (this.v1.equal(e.v2) && this.v2.equal(e.v1)) ) {
-            return true;
-        }
-        return false;
-    }
-
-    isConnected(e:Edge) : boolean {
-        if ( (this.v1.equal(e.v1) || this.v2.equal(e.v2)) ||
-             (this.v1.equal(e.v2) || this.v2.equal(e.v1)) ) {
-            return true;
-        }
-        return false;
-    }
-
-    length() : number {
-        return Math.sqrt((this.v1.x-this.v2.x)*(this.v1.x-this.v2.x)+
-                         (this.v1.y-this.v2.y)*(this.v1.y-this.v2.y)+
-                         (this.v1.z-this.v2.z)*(this.v1.z-this.v2.z));
-    }
-
-    static orderEdges(e1:Edge, e2:Edge) : Edge[] {
-        if (e1.v2.equal(e2.v1)) {
-            return [e1,e2];
-        }
-        else if (e2.v2.equal(e1.v1)) {
-            return [e2,e1];
-        }
-        else if (e1.v1.equal(e2.v1)) {
-            return [new Edge(e1.v2,e1.v1),e2]
-        }
-        else if (e1.v2.equal(e2.v2)) {
-            return [e1, new Edge(e2.v2,e2.v1)]
-        }
-        return [];
-    }
-}
 
 // export class EdgeSet {
 //     edges : Edge[];
