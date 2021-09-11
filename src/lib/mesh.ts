@@ -4,7 +4,7 @@ import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 import { TriangleInterface } from "./triangle";
 import { Triangle } from "./triangle";
-import { Edge } from "./triangle";
+import { Edge } from "./edge";
 
 export interface VertexFilterInterface {
     filter(vertex : VertexInterface) : VertexInterface;
@@ -166,7 +166,7 @@ export class MeshInfo {
         edges.forEach( (edge:Edge) => {
             let count:number = 0;
             for ( let edgeToCount of edges ) {
-                if ( edge.equal(edgeToCount ) ) {
+                if ( edge.isEqual(edgeToCount ) ) {
                     count++;
                 }
                 if ( count > 1 ) {
@@ -184,7 +184,7 @@ export class MeshInfo {
         let connectedEdges:Edge[] = [];
         let disconnectedEdges:Edge[] = [];
         edges.forEach( (edge:Edge) => {
-            if ( edge.v1.equal(vertex) || edge.v2.equal(vertex) ) {
+            if ( edge.v1.isEqual(vertex) || edge.v2.isEqual(vertex) ) {
                 connectedEdges.push(edge);
             }
             else {
@@ -241,7 +241,7 @@ export class MeshInfo {
         edges.forEach( (edge:Edge) => {
             let count:number = 0;
             edges.forEach( (edgeToCount:Edge) => {
-                if ( edge.equal(edgeToCount) ) {
+                if ( edge.isEqual(edgeToCount) ) {
                     count++;
                 }
             });
