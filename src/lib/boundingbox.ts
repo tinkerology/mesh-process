@@ -7,13 +7,18 @@ export class BoundingBox {
     maxy:number;
     maxz:number;
 
-    constructor() {
-        this.minx = Number.MIN_SAFE_INTEGER;
-        this.miny = Number.MIN_SAFE_INTEGER;
-        this.minz = Number.MIN_SAFE_INTEGER;
-        this.maxx = Number.MAX_SAFE_INTEGER;
-        this.maxy = Number.MAX_SAFE_INTEGER;
-        this.maxz = Number.MAX_SAFE_INTEGER;
+    constructor(minx=Number.MIN_SAFE_INTEGER,
+        miny = Number.MIN_SAFE_INTEGER,
+        minz = Number.MIN_SAFE_INTEGER,
+        maxx = Number.MAX_SAFE_INTEGER,
+        maxy = Number.MAX_SAFE_INTEGER,
+        maxz = Number.MAX_SAFE_INTEGER) {
+        this.minx = minx;
+        this.miny = miny;
+        this.minz = minz;
+        this.maxx = maxx;
+        this.maxy = maxy;
+        this.maxz = maxz;
     }
 
     isInside(x:number, y:number, z:number) : boolean {
