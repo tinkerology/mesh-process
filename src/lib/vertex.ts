@@ -17,7 +17,6 @@ export interface VertexInterface {
     mirror(x:boolean, y:boolean, z:boolean) : VertexInterface;
     scale(v : VertexInterface) : VertexInterface;
     add(v : VertexInterface) : VertexInterface;
-    equal(v : VertexInterface) : boolean;
     dot(v : VertexInterface) : number;
     cross(v : VertexInterface) : VertexInterface;
     length() : number;
@@ -67,13 +66,6 @@ export class Vertex implements VertexInterface {
 
     mirror(x:boolean, y:boolean, z:boolean) : VertexInterface {
         return new Vertex(x ? -1 * this.x : this.x, y ? -1 * this.y : this.y, z ? -1 * this.z : this.z);
-    }
-
-    equal(v : VertexInterface) : boolean {
-        if (this.x != v.x || this.y != v.y || this.z != v.z) {
-          return false;
-        }
-        return true;
     }
 
     dot(v : VertexInterface) : number {
