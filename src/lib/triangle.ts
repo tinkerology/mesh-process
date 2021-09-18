@@ -47,42 +47,19 @@ export class Triangle implements TriangleInterface {
     }
 
     isEqual(t : TriangleInterface) : boolean {
-        // 1,2,3
-        if ( t.v1.isEqual(this.v1) && t.v2.isEqual(this.v2) && t.v3.isEqual(this.v3) ) {
-            return true;
-        }
-        // 1,3,2
-        if ( t.v1.isEqual(this.v1) && t.v2.isEqual(this.v3) && t.v3.isEqual(this.v2) ) {
-            return true;
-        }
-        // 3,2,1
-        if ( t.v1.isEqual(this.v3) && t.v2.isEqual(this.v2) && t.v3.isEqual(this.v1) ) {
-            return true;
-        }
-        // 3,1,2
-        if ( t.v1.isEqual(this.v3) && t.v2.isEqual(this.v1) && t.v3.isEqual(this.v2) ) {
-            return true;
-        }
-        // 2,1,3
-        if ( t.v1.isEqual(this.v2) && t.v2.isEqual(this.v1) && t.v3.isEqual(this.v3) ) {
-            return true;
-        }
-        // 2,3,1
-        if ( t.v1.isEqual(this.v2) && t.v2.isEqual(this.v3) && t.v3.isEqual(this.v1) ) {
-            return true;
-        }
+        let edges:Edge[] = this.getEdges();
+        let tEdges:Edge[] = t.getEdges();
 
-        return false;
+        let matchingEdges:Edge[] = Edge.findMatchingEdges(edges,tEdges);
+        return matchingEdges.length == 3;
     }
 
     isAdjacent( t : TriangleInterface) : boolean
     {
-        // v1/v2, v1/v2
-        if ( this.v1 === t.v1 && this.v2 === t.v2 ) {
-            return true;
-        }
+        let edges:Edge[] = this.getEdges();
+        let tEdges:Edge[] = t.getEdges();
 
-        return false;
+        return Edge.hasMatchingEdges(edges,tEdges);
     }
 
     toString() : string {
@@ -109,20 +86,3 @@ export class Triangle implements TriangleInterface {
                           (this.v1.z+this.v2.z+this.v3.z)/3);   
     }
 }
-
-
-// export class EdgeSet {
-//     edges : Edge[];
-
-//     constructor() {
-//         this.edges = [];
-//     }
-
-//     addEdge(e:Edge) {
-//         this.edges.push(e);
-//     }
-
-//     containsEdge(e:Edge) : boolean {
-//         return this.edges.some( (edge, index, array) => { return e.equal(edge) } );
-//     }
-// }
