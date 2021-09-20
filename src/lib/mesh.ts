@@ -27,19 +27,3 @@ export class Mesh implements MeshInterface {
         return this;
     }
 } 
-
-export class Scene {
-    meshes:MeshInterface[];
-
-    constructor() {
-        this.meshes = [];
-    }
-
-    clear() {
-        this.meshes = [];
-    }
-
-    addMesh(mesh:MeshInterface) {
-        this.meshes.push(mesh);
-    }
-}
