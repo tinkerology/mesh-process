@@ -87,6 +87,8 @@ test('orderEdges', () => {
     // v2/v1 -> v3/v2
     expect(Edge.orderEdges(e3,e4)).toStrictEqual([e4,e3]);
     expect(Edge.orderEdges(e4,e3)).toStrictEqual([e4,e3]);
+
+    // if (e2.v2.isEqual(e1.v1))
     expect(Edge.orderEdges(e1,e5)).toStrictEqual([e5,e1]);
 });
 

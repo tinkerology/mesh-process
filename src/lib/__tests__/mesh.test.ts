@@ -1,7 +1,33 @@
 
-import { Mesh, MeshInfo } from '../mesh';
+import { Mesh, MeshInterface } from '../mesh';
+import { MeshInfo } from '../meshinfo';
 import { Triangle } from '../triangle';
 import { Vertex } from '../vertex';
+
+test('contructor', () => {
+    let mesh:MeshInterface = new Mesh();
+    expect(mesh.triangles.length).toBe(0);
+});
+
+test('addTriangle', () => {
+    let mesh:MeshInterface = new Mesh();
+    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
+    expect(mesh.triangles.length).toBe(1);
+    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
+    expect(mesh.triangles.length).toBe(2);
+});
+
+test('addMesh', () => {
+    let mesh1:MeshInterface = new Mesh();
+    let mesh2:MeshInterface = new Mesh();
+    mesh1.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
+    mesh1.addMesh(mesh2);
+    expect(mesh1.triangles.length).toBe(1);
+
+    mesh2.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
+    mesh1.addMesh(mesh2);
+    expect(mesh1.triangles.length).toBe(2);
+});
 
 test('getExtents_1_triangle', () => {
     let mesh1:Mesh = new Mesh();
