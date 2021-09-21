@@ -1,7 +1,7 @@
 
 import { BoundingBox } from "../lib/boundingbox";
 import { MeshInterface } from "../lib/mesh";
-import { MeshOperations } from "../lib/mesh";
+import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
 exports.command = 'crop [location] [minx] [miny] [minz] [maxx] [maxy] [maxz] [infile] [outfile] '

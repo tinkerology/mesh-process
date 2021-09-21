@@ -1,6 +1,7 @@
 
-import { MeshInterface, VertexFilterAbove, VertexFilterTranslate } from "../lib/mesh";
-import { MeshOperations } from "../lib/mesh";
+import { MeshInterface } from "../lib/mesh";
+import { VertexFilterAbove, VertexFilterTranslate } from "../lib/vertexfilter";
+import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 import { Vertex } from "../lib/vertex";
 

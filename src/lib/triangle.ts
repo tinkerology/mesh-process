@@ -26,6 +26,7 @@ export interface TriangleInterface {
 
     calculateNormal() : VertexInterface;
     flipNormal() : TriangleInterface;
+    getVertices() : VertexInterface[];
     getEdges() : Edge[];
     getCenterCentroid() : VertexInterface;
 }
@@ -72,6 +73,10 @@ export class Triangle implements TriangleInterface {
 
     flipNormal() : TriangleInterface {
         return new Triangle(this.v3.clone(), this.v2.clone(), this.v1.clone());
+    }
+
+    getVertices() : VertexInterface[] {
+        return [this.v1,this.v2,this.v3];
     }
 
     getEdges() : Edge[] {

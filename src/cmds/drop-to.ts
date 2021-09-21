@@ -1,8 +1,8 @@
 
 import { MeshInterface } from "../lib/mesh";
-import { MeshOperations } from "../lib/mesh";
+import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
-import { MeshInfo } from "../lib/mesh";
+import { MeshInfo } from "../lib/meshinfo";
 import { VertexInterface } from "../lib/vertex";
 import { Vertex } from "../lib/vertex";
 

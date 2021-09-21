@@ -48,6 +48,14 @@ export class MeshInfo {
         return extents;
     }
 
+    static getVertices(mesh:MeshInterface) : VertexInterface[] {
+        let allVertices:VertexInterface[] = [];
+        mesh.triangles.forEach(function(triangle:TriangleInterface) {
+            allVertices.push(...triangle.getVertices());
+        });
+        return allVertices;
+    }
+
     static getEdges(mesh:MeshInterface) : Edge[] {
         let allEdges:Edge[] = [];
         mesh.triangles.forEach(function(triangle:TriangleInterface) {

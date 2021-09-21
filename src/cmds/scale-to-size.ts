@@ -1,6 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
-import { MeshOperations } from "../lib/mesh";
+import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
 exports.command = 'scale-to-size [axis] [size] [infile] [outfile]'

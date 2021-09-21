@@ -6,7 +6,9 @@ import { VertexFilterInterface } from "./vertexfilter";
 import { TriangleInterface } from "./triangle";
 import { Triangle } from "./triangle";
 import { Edge } from "./edge";
-import { Mesh, MeshExtents, MeshInterface, Scene } from "./mesh";
+import { Mesh, MeshInterface } from "./mesh";
+import { MeshExtents } from "./meshinfo";
+import { Scene } from "./scene";
 import { MeshInfo } from "./meshinfo";
 
 

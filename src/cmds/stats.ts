@@ -1,7 +1,7 @@
 
 import { MeshInterface } from "../lib/mesh";
-import { MeshInfo } from "../lib/mesh";
-import { MeshExtents } from "../lib/mesh";
+import { MeshInfo } from "../lib/meshinfo";
+import { MeshExtents } from "../lib/meshinfo";
 import { STLFile } from "../lib/stlfile";
 
 exports.command = 'stats [file]'
