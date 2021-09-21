@@ -1,6 +1,6 @@
 
 import { Mesh, MeshInterface } from '../mesh';
-import { MeshInfo } from '../meshinfo';
+import { MeshExtents, MeshInfo } from '../meshinfo';
 import { Triangle } from '../triangle';
 import { Vertex } from '../vertex';
 
@@ -58,11 +58,12 @@ test('getExtents_2_triangles', () => {
 
     mesh1.addTriangle(new Triangle(new Vertex(minX,minY,minZ), new Vertex(10,0,0), new Vertex(maxX,maxY,3)));
     mesh1.addTriangle(new Triangle(new Vertex(minX+1,minY+1,minZ+1), new Vertex(10,0,0), new Vertex(maxX-1,maxY,3)));
-    expect(MeshInfo.getExtents(mesh1).minx).toBe(minX);
-    expect(MeshInfo.getExtents(mesh1).miny).toBe(minY);
-    expect(MeshInfo.getExtents(mesh1).minz).toBe(minZ);
-    expect(MeshInfo.getExtents(mesh1).maxx).toBe(maxX);
-    expect(MeshInfo.getExtents(mesh1).maxy).toBe(maxY);
-    expect(MeshInfo.getExtents(mesh1).maxz).toBe(maxZ);
+    let extents:MeshExtents = MeshInfo.getExtents(mesh1);
+    expect(extents.minx).toBe(minX);
+    expect(extents.miny).toBe(minY);
+    expect(extents.minz).toBe(minZ);
+    expect(extents.maxx).toBe(maxX);
+    expect(extents.maxy).toBe(maxY);
+    expect(extents.maxz).toBe(maxZ);
 });
 
