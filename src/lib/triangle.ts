@@ -68,7 +68,9 @@ export class Triangle implements TriangleInterface {
     }
 
     calculateNormal() : VertexInterface {
-        return this.v1.cross(this.v2);
+        let v1v2:VertexInterface = this.v2.subtract(this.v1);
+        let v1v3:VertexInterface = this.v3.subtract(this.v1);
+        return v1v2.cross(v1v3);
     }
 
     flipNormal() : TriangleInterface {
