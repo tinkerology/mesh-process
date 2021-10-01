@@ -17,6 +17,7 @@ export interface VertexInterface {
     mirror(x:boolean, y:boolean, z:boolean) : VertexInterface;
     scale(v : VertexInterface) : VertexInterface;
     add(v : VertexInterface) : VertexInterface;
+    subtract(v : VertexInterface) : VertexInterface;
     dot(v : VertexInterface) : number;
     cross(v : VertexInterface) : VertexInterface;
     length() : number;
@@ -64,6 +65,10 @@ export class Vertex implements VertexInterface {
         return new Vertex(this.x+v.x, this.y+v.y, this.z+v.z);
     }
 
+    subtract(v : VertexInterface) : VertexInterface {
+        return new Vertex(this.x-v.x, this.y-v.y, this.z-v.z);
+    }
+
     mirror(x:boolean, y:boolean, z:boolean) : VertexInterface {
         return new Vertex(x ? -1 * this.x : this.x, y ? -1 * this.y : this.y, z ? -1 * this.z : this.z);
     }
@@ -86,4 +91,33 @@ export class Vertex implements VertexInterface {
             this.z * this.z);
     }
     
+    // https://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
+    static matrixMultiply(a:number[][], b:number[][]) : number[] {
+        var result = new Array(a.length);
+        for (var r = 0; r < a.length; ++r) {
+            result[r] = new Array(b[0].length);
+            for (var c = 0; c < b[0].length; ++c) {
+                result[r][c] = 0;
+                for (var i = 0; i < a[0].length; ++i) {
+                    result[r][c] += a[r][i] * b[i][c];
+                }
+            }
+        }
+        return result;
+    }
+
+    static matrixMultiply2(a:number[][], b:number[][]) : number[][] {
+        var result:number[][] = [];
+        for (var r = 0; r < a.length-1; r++) {
+            result.push([]);
+            for (var c = 0; c < b[0].length-1; c++) {
+                let accum:number = 0;
+                for (var i = 0; i < a[0].length; ++i) {
+                    accum += a[r][i] * b[i][c];
+                }
+                result[r].push(accum);
+            }
+        }
+        return result;
+    }
 }
