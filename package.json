@@ -1,6 +1,6 @@
 {
   "name": "mesh-process",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "STL file reader/writer and mesh processing library",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -15,8 +15,8 @@
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
-    "jtest": "jest",
-    "jtestcov": "jest --coverage",
+    "jtest": "mkdir -p __testout__ && jest",
+    "jtestcov": "mkdir -p __testout__ && jest --coverage",
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
