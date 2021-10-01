@@ -119,3 +119,7 @@ test('cross', () => {
     expect(v2.cross(v3)).toStrictEqual(new Vertex(100,0,0));
 });
 
+test('matrixMultiply', () => {
+    let m1:number[][] = Vertex.matrixMultiply2([[1,2],[3,4]], [[1,2],[5,6]]);
+    console.log(m1);
+});

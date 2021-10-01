@@ -68,6 +68,15 @@ test('getEdgeLengths', () => {
     expect(lengths[0]).toBe(10);
 });
 
+// test('getConnectedEdges', () => {
+//     let mesh:MeshInterface = new Mesh();
+//     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
+//     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
+//     let edges:Edge[] = MeshInfo.getEdges(mesh);
+//     let connectedEdges:Edge[] = MeshInfo.getConnectedEdges(edges);
+//     expect(connectedEdges.length).toBe(6);
+// });
+
 test('getVertices', () => {
     let mesh:MeshInterface = new Mesh();
     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));

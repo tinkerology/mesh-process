@@ -86,7 +86,7 @@ test('calculateNormal', () => {
 
     let t1:TriangleInterface = new Triangle(v1,v2,v3);
 
-    expect(t1.calculateNormal()).toStrictEqual(new Vertex(0,0,0));
+    expect(t1.calculateNormal()).toStrictEqual(new Vertex(0,0,-400));
 });
 
 test('flipNormal', () => {
