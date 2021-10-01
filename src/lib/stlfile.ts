@@ -83,8 +83,6 @@ export class STLFile implements STLFileInterface {
     }
 
     readSTLString(buffer : string) : MeshInterface {
-        // console.log("readSTLFile: " + buffer.substring(0,80));
-
         // Create a new Mesh
         let mesh:MeshInterface = new Mesh();
 
@@ -95,7 +93,6 @@ export class STLFile implements STLFileInterface {
         );
     
         if ( vertexes != null ) {
-            // console.log("vertexes: " + vertexes?.length);
             vertexes.forEach( (vert) => {
                 if ( vert != null ) {
                     // console.log("   vert string: " + vert);
@@ -103,16 +100,13 @@ export class STLFile implements STLFileInterface {
                         /vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s/g
                     );
                     if ( vectors != null ) {
-                        // console.log("vectors: " + vectors.length);
                         const triangle = new Array(3);
                         vectors.forEach((vertex, i) => {
-                            // console.log("   vertex xyz string["+i+"]: " + vertex);
                             const xyz : RegExpMatchArray|null = vertex
                             .replace("vertex", "")
                             .match(/[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?/g);
                 
                             if ( xyz != null ) {
-                                // console.log("   vertex xyz[]: " + xyz);
                                 triangle[i] = new Vertex(Number(xyz[0]), Number(xyz[1]), Number(xyz[2]));
                             }
                         });
