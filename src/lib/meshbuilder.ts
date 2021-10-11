@@ -19,6 +19,22 @@ export class MeshBuilder {
         return mesh;
     }
 
+    static buildCircle(radius:number, facets:number) : MeshInterface {
+        const mesh:MeshInterface = new Mesh();
+        const center:VertexInterface = new Vertex(0,0,0);
+
+        // Math.sin/cos are in radians
+        const angle = (2*Math.PI)/facets;
+
+        for ( let i=0; i < facets; i++ ) {
+            let edgeV1:VertexInterface = new Vertex(Math.cos(i*angle)*radius, Math.sin(i*angle)*radius, 0);
+            let edgeV2:VertexInterface = new Vertex(Math.cos((i+1)*angle)*radius, Math.sin((i+1)*angle)*radius, 0);
+            let triangle = new Triangle(center,edgeV1,edgeV2);
+            mesh.addTriangle(triangle);
+        }
+        return mesh;
+    }
+
     static buildRectangle(v1:VertexInterface, v2:VertexInterface,
                           v3:VertexInterface, v4:VertexInterface) : MeshInterface {
         let mesh:MeshInterface = new Mesh();
