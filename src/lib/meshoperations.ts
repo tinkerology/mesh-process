@@ -41,7 +41,7 @@ export class MeshOperations {
             mirroredMesh.addTriangle(new Triangle(
                                             triangle.v1.mirror(x,y,z),
                                             triangle.v2.mirror(x,y,z),
-                                            triangle.v3.mirror(x,y,z))
+                                            triangle.v3.mirror(x,y,z)).flipNormal()
             );
         });
         return mirroredMesh;
