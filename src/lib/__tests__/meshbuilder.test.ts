@@ -39,3 +39,11 @@ test('buildCuboid', () => {
     let stlFile:STLFile = new STLFile();
     stlFile.writeSTLFile("__testout__/MeshBuilderTest_buildCuboid.stl", "test", mesh);
 });
+
+test('buildCircle', () => {
+    let mesh:MeshInterface = MeshBuilder.buildCircle(100, 30);;
+//    expect(mesh.triangles.length).toBe(30);
+
+    let stlFile:STLFile = new STLFile();
+    stlFile.writeSTLFile("__testout__/MeshBuilderTest_buildCircle.stl", "test", mesh);
+});
