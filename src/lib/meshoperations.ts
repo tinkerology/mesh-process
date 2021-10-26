@@ -16,6 +16,21 @@ export class MeshOperations {
     static CROP_INSIDE : number = 0;
     static CROP_OUTSIDE : number = 1;
 
+    static rotate(mesh:MeshInterface, x:number, y:number, z:number) : MeshInterface
+    {
+        const rotatedMesh = new Mesh();
+
+        mesh.triangles.forEach(function(triangle:TriangleInterface) {
+            const rotatedTriangle = new Triangle( triangle.v1.rotate(x,y,z),
+                                                  triangle.v2.rotate(x,y,z),
+                                                  triangle.v3.rotate(x,y,z)
+            );
+            rotatedMesh.addTriangle(rotatedTriangle);
+        });
+
+        return rotatedMesh;
+    }
+
     static crop(mesh:MeshInterface, boundingBox:BoundingBox) : Scene {
         let insideMesh:MeshInterface = new Mesh();
         let outsideMesh:MeshInterface = new Mesh();
