@@ -1,5 +1,4 @@
 
-
 import { Matrix } from '../matrix';
 
 test('matrixMultiply', () => {
