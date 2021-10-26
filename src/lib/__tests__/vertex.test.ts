@@ -1,6 +1,7 @@
 
 import { BoundingBox } from '../boundingbox';
 import { Vertex, VertexInterface } from '../vertex';
+import { Util } from '../util';
 
 test('constructor', () => {
     let v1:VertexInterface = new Vertex(1,2,3);
@@ -118,3 +119,27 @@ test('cross', () => {
     expect(v1.cross(v3)).toStrictEqual(new Vertex(0,-100,0));
     expect(v2.cross(v3)).toStrictEqual(new Vertex(100,0,0));
 });
+
+test('rotate', () => {
+    // Simple 90 degree rotations from X axis
+    let v1:VertexInterface = new Vertex(10,0,0);
+    expect(v1.rotate(90,0,0)).toStrictEqual(new Vertex(10,0,0));
+    expect(v1.rotate(0,90,0)).toStrictEqual(new Vertex(0,0,-10));
+    expect(v1.rotate(0,0,90)).toStrictEqual(new Vertex(0,10,0));
+    expect(v1.rotate(90,90,90)).toStrictEqual(new Vertex(0,0,-10));
+
+    // Test rounded numbers since floating point is not precise
+    expect(v1.rotate(0,0,45).round(5)).toStrictEqual(
+        new Vertex(Util.round(Math.sqrt(10*10/2), 5),
+                    Util.round(Math.sqrt(10*10/2), 5) ,0));
+
+    // Simple 90 degree rotations from Y axis
+    let v2:VertexInterface = new Vertex(0,10,0);
+    expect(v2.rotate(90,0,0)).toStrictEqual(new Vertex(0,0,10));
+    expect(v2.rotate(0,90,0)).toStrictEqual(new Vertex(0,10,0));
+    expect(v2.rotate(0,0,90)).toStrictEqual(new Vertex(-10,0,0));
+
+
+    // let v3:VertexInterface = new Vertex(0,0,10);
+});
+
