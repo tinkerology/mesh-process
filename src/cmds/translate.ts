@@ -31,10 +31,10 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let translatedMesh:MeshInterface = MeshOperations.translate(mesh, new Vertex(argv.x, argv.y, argv.z));
+    const translatedMesh:MeshInterface = MeshOperations.translate(mesh, new Vertex(argv.x, argv.y, argv.z));
 
     stlFile.writeSTLFile(argv.outfile, "Translate_x" + argv.x + "_y" + argv.y + "_z" + argv.z, translatedMesh);
   }
