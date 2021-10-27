@@ -28,6 +28,10 @@ Commands:
   meshtool drop-to [location] [infile]      Drop the specified STL file to zero
   [outfile]                                 on the specified axes.
 
+  meshtool filter-vertex-replace [xOrig]    Change the location of the vertex in
+  [yOrig] [zOrig] [xNew] [yNew] [zNew]      the specified STL file
+  [infile] [outfile]
+
   meshtool mirror [location] [infile]       Mirror the specified STL file on the
   [outfile]                                 specified axis
 
@@ -37,6 +41,9 @@ Commands:
   meshtool replicate [xCount] [xSpacing]    Replicate the specified STL file in
   [ySpacing] [totalCount] [infile]          a grid
   [outfile]
+
+  meshtool rotate [x] [y] [z] [infile]      Rotate the specified STL file by the
+  [outfile]                                 specified degrees in X, Y, and Z    
 
   meshtool scale-to-size [axis] [size]      Scale the specified STL file to
   [infile] [outfile]                        [size] along the [axis]
