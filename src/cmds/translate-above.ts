@@ -67,6 +67,6 @@ exports.handler = function (argv:any) {
     stlFile.writeSTLFile(argv.outfile, "TranslateAbove_x" + argv.x + "_y" + argv.y + "_z" + argv.z, translatedMesh);
   }
   catch (e) {
-    console.log("Error: Unable to load file\n", e.message);
+    console.log("Error: Unable to load file\n", (e as Error).message);
   }
 }

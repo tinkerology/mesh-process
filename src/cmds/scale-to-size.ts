@@ -34,6 +34,6 @@ exports.handler = function (argv:any) {
     stlFile.writeSTLFile(argv.outfile, "ScaleToSize_axis" + argv.axis + "_size" + argv.size, scaledMesh);
   }
   catch (e) {
-    console.log("Error: Unable to load file\n", e.message);
+    console.log("Error: Unable to load file\n", (e as Error).message);
   }
 }

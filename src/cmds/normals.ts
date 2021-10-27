@@ -33,6 +33,6 @@ exports.handler = function (argv:any) {
     stlFile.writeSTLFile(argv.outfile, "Normals_" + argv.operation, mesh);
   }
   catch (e) {
-    console.log("Error: Unable to load file\n", e.message);
+    console.log("Error: Unable to load file\n", (e as Error).message);
   }
 }

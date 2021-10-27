@@ -39,6 +39,6 @@ exports.handler = function (argv:any) {
 
   }
   catch (e) {
-    console.log("Error: Unable to load file\n", e.message);
+    console.log("Error: Unable to load file\n", (e as Error).message);
   }
 }
