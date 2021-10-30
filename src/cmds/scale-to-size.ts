@@ -26,10 +26,10 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let scaledMesh:MeshInterface = MeshOperations.scaleToSize(mesh, argv.axis, argv.size);
+    const scaledMesh:MeshInterface = MeshOperations.scaleToSize(mesh, argv.axis, argv.size);
 
     stlFile.writeSTLFile(argv.outfile, "ScaleToSize_axis" + argv.axis + "_size" + argv.size, scaledMesh);
   }

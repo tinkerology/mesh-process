@@ -41,10 +41,10 @@ exports.builder = {
 }
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let boundingBox = new BoundingBox();
+    const boundingBox = new BoundingBox();
     boundingBox.minx = argv.minx;
     boundingBox.miny = argv.miny;
     boundingBox.minz = argv.minz;
@@ -52,8 +52,8 @@ exports.handler = function (argv:any) {
     boundingBox.maxy = argv.maxy;
     boundingBox.maxz = argv.maxz;
 
-    let location:number = argv.location=="inside" ? MeshOperations.CROP_INSIDE : MeshOperations.CROP_OUTSIDE;
-    let croppedMesh:MeshInterface = MeshOperations.crop(mesh, boundingBox).meshes[location];
+    const location:number = argv.location=="inside" ? MeshOperations.CROP_INSIDE : MeshOperations.CROP_OUTSIDE;
+    const croppedMesh:MeshInterface = MeshOperations.crop(mesh, boundingBox).meshes[location];
 
     stlFile.writeSTLFile(argv.outfile, "Cropped", croppedMesh);
 

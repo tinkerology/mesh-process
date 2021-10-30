@@ -1,9 +1,9 @@
 
 import { MeshInterface } from "../lib/mesh";
-import { VertexFilterAbove, VertexFilterTranslate } from "../lib/vertexfilter";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 import { Vertex } from "../lib/vertex";
+import { VertexFilterAbove, VertexFilterTranslate } from "../lib/vertexfilter";
 
 exports.command = 'translate-above [xThreshold] [yThreshold] [zThreshold] [x] [y] [z] [infile] [outfile]'
 exports.desc = 'Translate the vertices in the specified STL file above xThreshhold'
@@ -56,10 +56,10 @@ exports.handler = function (argv:any) {
       console.log("Z threshold set to max");
       argv.zThreshhold = Number.MAX_VALUE;
     }
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let translatedMesh:MeshInterface = MeshOperations.translateFiltered(mesh,
+    const translatedMesh:MeshInterface = MeshOperations.translateFiltered(mesh,
           new VertexFilterAbove(argv.xThreshold, argv.yThreshold, argv.zThreshold,
                                  new VertexFilterTranslate(new Vertex(argv.x, argv.y, argv.z) ) )
     );

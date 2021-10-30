@@ -1,9 +1,9 @@
 
 import { MeshInterface } from "../lib/mesh";
-import { VertexFilterReplace } from "../lib/vertexfilter";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 import { Vertex } from "../lib/vertex";
+import { VertexFilterReplace } from "../lib/vertexfilter";
 
 exports.command = 'filter-vertex-replace [xOrig] [yOrig] [zOrig] [xNew] [yNew] [zNew] [infile] [outfile]'
 exports.desc = 'Change the location of the vertex in the specified STL file'
@@ -44,10 +44,10 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let translatedMesh:MeshInterface = MeshOperations.filterVertices(mesh,
+    const translatedMesh:MeshInterface = MeshOperations.filterVertices(mesh,
           new VertexFilterReplace(new Vertex(argv.xOrig, argv.yOrig, argv.zOrig),
                                   new Vertex(argv.xNew, argv.yNew, argv.zNew) ) );
 

@@ -21,9 +21,9 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh1:MeshInterface = stlFile.readSTLFile(argv.infile1);
-    let mesh2:MeshInterface = stlFile.readSTLFile(argv.infile2);
+    const stlFile : STLFile = new STLFile();
+    const mesh1:MeshInterface = stlFile.readSTLFile(argv.infile1);
+    const mesh2:MeshInterface = stlFile.readSTLFile(argv.infile2);
 
     mesh1.addMesh(mesh2);
     

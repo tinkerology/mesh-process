@@ -23,12 +23,12 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let x:boolean = false; 
-    let y:boolean = false; 
-    let z:boolean = false; 
+    let x = false; 
+    let y = false; 
+    let z = false; 
     if ( argv.location.indexOf('x') >= 0 ) {
       x = true;
     }
@@ -39,7 +39,7 @@ exports.handler = function (argv:any) {
       z = true;
     }
 
-    let translatedMesh:MeshInterface = MeshOperations.mirror(mesh, x, y, z);
+    const translatedMesh:MeshInterface = MeshOperations.mirror(mesh, x, y, z);
 
     stlFile.writeSTLFile(argv.outfile, "Mirror_" + argv.location, translatedMesh);
 

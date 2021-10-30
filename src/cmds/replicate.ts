@@ -34,14 +34,12 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-
-    let combinedMesh:MeshInterface = MeshOperations.replicate(mesh, argv.xCount, argv.xSpacing, argv.ySpacing, argv.totalCount);
+    const combinedMesh:MeshInterface = MeshOperations.replicate(mesh, argv.xCount, argv.xSpacing, argv.ySpacing, argv.totalCount);
     
     stlFile.writeSTLFile(argv.outfile, "Replicate_" + argv.totalCount, combinedMesh);
-
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

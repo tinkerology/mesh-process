@@ -31,10 +31,10 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(argv.x, argv.y, argv.z));
+    const scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(argv.x, argv.y, argv.z));
 
     stlFile.writeSTLFile(argv.outfile, "Scale_x" + argv.x + "_y" + argv.y + "_z" + argv.z, scaledMesh);
   }

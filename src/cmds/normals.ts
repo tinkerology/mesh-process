@@ -23,7 +23,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
+    const stlFile : STLFile = new STLFile();
     let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
     if ( argv.operation == 'flip') {

@@ -30,13 +30,12 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let rotatedMesh:MeshInterface = MeshOperations.rotate(mesh, argv.x, argv.y, argv.z);
+    const rotatedMesh:MeshInterface = MeshOperations.rotate(mesh, argv.x, argv.y, argv.z);
 
     stlFile.writeSTLFile(argv.outfile, "Rotate_" + argv.x + "_" + argv.y + "_" + argv.z, rotatedMesh);
-
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);
