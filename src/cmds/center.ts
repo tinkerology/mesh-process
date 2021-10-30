@@ -1,8 +1,8 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshInfo } from "../lib/meshinfo";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
-import { MeshInfo } from "../lib/meshinfo";
 import { VertexInterface } from "../lib/vertex";
 import { Vertex } from "../lib/vertex";
 
@@ -26,13 +26,13 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const stlFile : STLFile = new STLFile();
+    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
 
-    let xOffset:number = 0; 
-    let yOffset:number = 0; 
-    let zOffset:number = 0; 
-    var meshExtents = MeshInfo.getExtents(mesh);
+    let xOffset = 0; 
+    let yOffset = 0; 
+    let zOffset = 0; 
+    const meshExtents = MeshInfo.getExtents(mesh);
     if ( argv.location.indexOf('x') >= 0 ) {
       xOffset = -1*(meshExtents.maxx-meshExtents.minx)/2-meshExtents.minx;
     }
@@ -43,8 +43,8 @@ exports.handler = function (argv:any) {
       zOffset = -1*(meshExtents.maxz-meshExtents.minz)/2-meshExtents.minz;
     }
 
-    let offset:VertexInterface = new Vertex(xOffset,yOffset,zOffset);
-    let translatedMesh:MeshInterface = MeshOperations.translate(mesh, offset);
+    const offset:VertexInterface = new Vertex(xOffset,yOffset,zOffset);
+    const translatedMesh:MeshInterface = MeshOperations.translate(mesh, offset);
 
     stlFile.writeSTLFile(argv.outfile, "Center_" + argv.location, translatedMesh);
 
