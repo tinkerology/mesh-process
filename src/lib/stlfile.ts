@@ -1,4 +1,6 @@
 
+import * as fs from "fs";
+
 import { MeshInterface } from "./mesh";
 import { Mesh } from "./mesh";
 import { TriangleInterface } from "./triangle";
@@ -6,7 +8,7 @@ import { Triangle } from "./triangle";
 import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 
-const fs = require("fs");
+// const fs = require("fs");
 
 // This file is MIT license due to copying code from:
 // https://github.com/johannesboyne/node-stl
@@ -33,13 +35,11 @@ export interface STLFileInterface {
     readSTLFile(path: string) : MeshInterface;
     readSTLBuffer(buffer : Buffer) : MeshInterface;
     readSTLString(buffer : string) : MeshInterface;
-    writeSTLFile(path:string, name:string, mesh:MeshInterface) : any;
+    writeSTLFile(path:string, name:string, mesh:MeshInterface) : void;
     writeSTLString(name: string, mesh:MeshInterface) : string;
 }
 
 export class STLFile implements STLFileInterface {
-    constructor() {
-    }
 
     readSTLFile(path: string) : MeshInterface {
         // console.log("readSTLFile: " + path);
@@ -169,9 +169,8 @@ export class STLFile implements STLFileInterface {
             }
         }
 
-        let expected_size, face_size, n_faces;
-        face_size = 50;
-        n_faces = buffer.readUInt32LE(80);
+        const face_size = 50;
+        const n_faces = buffer.readUInt32LE(80);
 
         // An ASCII STL data must begin with 'solid ' as the first six bytes.
         // However, ASCII STLs lacking the SPACE after the 'd' are known to be
@@ -179,7 +178,7 @@ export class STLFile implements STLFileInterface {
         // regardless of this standard, so we check if offset 80, the location of
         // the number of triangles in a binary STL matches the expected file size.
 
-        expected_size = header_size + n_faces * face_size;
+        const expected_size = header_size + n_faces * face_size;
         return buffer.length === expected_size;
     }
 
