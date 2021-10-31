@@ -1,8 +1,8 @@
 
-import { MeshInterface } from "./mesh";
-import { VertexInterface } from "./vertex";
-import { TriangleInterface } from "./triangle";
 import { Edge } from "./edge";
+import { MeshInterface } from "./mesh";
+import { TriangleInterface } from "./triangle";
+import { VertexInterface } from "./vertex";
 
 
 export class MeshExtents {
@@ -39,7 +39,7 @@ export class MeshExtents {
 
 export class MeshInfo {
     static getExtents(mesh:MeshInterface) : MeshExtents {
-        let extents : MeshExtents = new MeshExtents();
+        const extents : MeshExtents = new MeshExtents();
         mesh.triangles.forEach(function(triangle:TriangleInterface) {
             extents.extend(triangle.v1);
             extents.extend(triangle.v2);
@@ -49,7 +49,7 @@ export class MeshInfo {
     }
 
     static getVertices(mesh:MeshInterface) : VertexInterface[] {
-        let allVertices:VertexInterface[] = [];
+        const allVertices:VertexInterface[] = [];
         mesh.triangles.forEach(function(triangle:TriangleInterface) {
             allVertices.push(...triangle.getVertices());
         });
@@ -57,7 +57,7 @@ export class MeshInfo {
     }
 
     static getEdges(mesh:MeshInterface) : Edge[] {
-        let allEdges:Edge[] = [];
+        const allEdges:Edge[] = [];
         mesh.triangles.forEach(function(triangle:TriangleInterface) {
             allEdges.push(...triangle.getEdges());
         });
@@ -65,10 +65,10 @@ export class MeshInfo {
     }
 
     static getSingleEdges(edges:Edge[]) : Edge[] {
-        let singleEdges:Edge[] = [];
+        const singleEdges:Edge[] = [];
         edges.forEach( (edge:Edge) => {
-            let count:number = 0;
-            for ( let edgeToCount of edges ) {
+            let count = 0;
+            for ( const edgeToCount of edges ) {
                 if ( edge.isEqual(edgeToCount ) ) {
                     count++;
                 }
@@ -84,8 +84,8 @@ export class MeshInfo {
     }
 
     static getEdgesAtVertex(edges:Edge[], vertex: VertexInterface) : Edge[][] {
-        let connectedEdges:Edge[] = [];
-        let disconnectedEdges:Edge[] = [];
+        const connectedEdges:Edge[] = [];
+        const disconnectedEdges:Edge[] = [];
         edges.forEach( (edge:Edge) => {
             if ( edge.v1.isEqual(vertex) || edge.v2.isEqual(vertex) ) {
                 connectedEdges.push(edge);
@@ -101,9 +101,9 @@ export class MeshInfo {
         let connectedEdges:Edge[] = [];
         let done:boolean = (edges.length == 0);
         while (!done) {
-            let v1Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v1);
+            const v1Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v1);
             connectedEdges = connectedEdges.concat(v1Connections[0]);
-            let v2Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v2);
+            const v2Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v2);
             connectedEdges = connectedEdges.concat(v2Connections[0]);
 
             if (v1Connections[0].length == 0 && v2Connections[0].length == 0 ) {
@@ -114,7 +114,7 @@ export class MeshInfo {
     }
 
     static getEdgeLengths(edges:Edge[]) : number[] {
-        let edgeLengths:number[] = [];
+        const edgeLengths:number[] = [];
         edges.forEach( (edge:Edge) => {
             edgeLengths.push(edge.length());
         });
@@ -122,7 +122,7 @@ export class MeshInfo {
     }
 
     static getVertexDistances(vertex:VertexInterface, vertexes:VertexInterface[]) : number[] {
-        let vertexDistances:number[] = [];
+        const vertexDistances:number[] = [];
         vertexes.forEach( (toVertex:VertexInterface) => {
             vertexDistances.push(vertex.distance(toVertex));    
         });
@@ -142,7 +142,7 @@ export class MeshInfo {
 
     static logEdgesCounts(edges:Edge[]) {
         edges.forEach( (edge:Edge) => {
-            let count:number = 0;
+            let count = 0;
             edges.forEach( (edgeToCount:Edge) => {
                 if ( edge.isEqual(edgeToCount) ) {
                     count++;

@@ -13,10 +13,10 @@ exports.builder = {
 }
 exports.handler = function (argv:any) {
     try {
-      let stlFile : STLFile = new STLFile();
-      let mesh:MeshInterface = stlFile.readSTLFile(argv.file);
-      let triangleCount:number = mesh.triangles.length;
-      let meshExtents:MeshExtents = MeshInfo.getExtents(mesh);
+      const stlFile : STLFile = new STLFile();
+      const mesh:MeshInterface = stlFile.readSTLFile(argv.file);
+      const triangleCount:number = mesh.triangles.length;
+      const meshExtents:MeshExtents = MeshInfo.getExtents(mesh);
       console.log({
           "file": argv.file,
           "triangleCount" : triangleCount,

@@ -1,10 +1,10 @@
 
-import { VertexInterface } from "./vertex";
-import { Vertex } from "./vertex";
-import { TriangleInterface } from "./triangle";
-import { Triangle } from "./triangle";
 import { MeshInterface } from "./mesh";
 import { Mesh } from "./mesh";
+import { TriangleInterface } from "./triangle";
+import { Triangle } from "./triangle";
+import { VertexInterface } from "./vertex";
+import { Vertex } from "./vertex";
 
 const fs = require("fs");
 
@@ -44,8 +44,8 @@ export class STLFile implements STLFileInterface {
     readSTLFile(path: string) : MeshInterface {
         // console.log("readSTLFile: " + path);
 
-        let buffer : Buffer = fs.readFileSync(path);
-        let isBinary : boolean = this._isBinary(buffer);
+        const buffer : Buffer = fs.readFileSync(path);
+        const isBinary : boolean = this._isBinary(buffer);
         // console.log("isBinary: " + isBinary);
         if ( isBinary ) {
             return this.readSTLBuffer(buffer);
@@ -64,7 +64,7 @@ export class STLFile implements STLFileInterface {
         for (let face = 0; face < faces; face++) {
           const start = dataOffset + face * faceLength;
     
-          let vertexes = new Array(3);
+          const vertexes = new Array(3);
     
           for (let i = 1; i <= 3; i++) {
             const vertexstart = start + i * 12;
@@ -84,11 +84,11 @@ export class STLFile implements STLFileInterface {
 
     readSTLString(buffer : string) : MeshInterface {
         // Create a new Mesh
-        let mesh:MeshInterface = new Mesh();
+        const mesh:MeshInterface = new Mesh();
 
         // yes, this is the regular expression, matching the vertexes
         // it was kind of tricky but it is fast and does the job
-        let vertexes : string[]|null = buffer.match(
+        const vertexes : string[]|null = buffer.match(
             /facet\s+normal\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+outer\s+loop\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+endloop\s+endfacet/g
         );
     
@@ -96,7 +96,7 @@ export class STLFile implements STLFileInterface {
             vertexes.forEach( (vert) => {
                 if ( vert != null ) {
                     // console.log("   vert string: " + vert);
-                    let vectors : RegExpMatchArray|null = vert.match(
+                    const vectors : RegExpMatchArray|null = vert.match(
                         /vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s/g
                     );
                     if ( vectors != null ) {
@@ -133,7 +133,7 @@ export class STLFile implements STLFileInterface {
 
         // Write out all the triangles
         mesh.triangles.forEach(function(triangle:TriangleInterface) {
-            let normal : VertexInterface = triangle.calculateNormal();
+            const normal : VertexInterface = triangle.calculateNormal();
 
             buffer += " facet normal " + normal.x + " " + normal.y + " " + normal.z + "\n";
             buffer += "  outer loop\n";
@@ -163,7 +163,7 @@ export class STLFile implements STLFileInterface {
             return false; // an empty binary STL must be at least 84 bytes
         }
 
-        for (var i = 0, strLen = str.length; i < strLen; ++i) {
+        for (let i = 0, strLen = str.length; i < strLen; ++i) {
             if (str.charCodeAt(i) > MAX_ASCII_CHAR_CODE) {
                 return true;
             }

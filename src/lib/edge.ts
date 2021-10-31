@@ -49,9 +49,9 @@ export class Edge {
 
     static findMatchingEdges(edges1:Edge[], edges2:Edge[]) : Edge[]
     {
-        let matchingEdges:Edge[] = [];
-        for ( let edge1 of edges1 ) {
-            for ( let edge2 of edges2 ) {
+        const matchingEdges:Edge[] = [];
+        for ( const edge1 of edges1 ) {
+            for ( const edge2 of edges2 ) {
                 if ( edge1.isEqual(edge2) ) {
                     matchingEdges.push(edge1);
                 }
@@ -62,8 +62,8 @@ export class Edge {
 
     static hasMatchingEdges(edges1:Edge[], edges2:Edge[]) : boolean
     {
-        for ( let edge1 of edges1 ) {
-            for ( let edge2 of edges2 ) {
+        for ( const edge1 of edges1 ) {
+            for ( const edge2 of edges2 ) {
                 if ( edge1.isEqual(edge2) ) {
                     return true;
                 }

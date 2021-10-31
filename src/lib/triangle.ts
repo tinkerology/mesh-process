@@ -48,17 +48,17 @@ export class Triangle implements TriangleInterface {
     }
 
     isEqual(t : TriangleInterface) : boolean {
-        let edges:Edge[] = this.getEdges();
-        let tEdges:Edge[] = t.getEdges();
+        const edges:Edge[] = this.getEdges();
+        const tEdges:Edge[] = t.getEdges();
 
-        let matchingEdges:Edge[] = Edge.findMatchingEdges(edges,tEdges);
+        const matchingEdges:Edge[] = Edge.findMatchingEdges(edges,tEdges);
         return matchingEdges.length == 3;
     }
 
     isAdjacent( t : TriangleInterface) : boolean
     {
-        let edges:Edge[] = this.getEdges();
-        let tEdges:Edge[] = t.getEdges();
+        const edges:Edge[] = this.getEdges();
+        const tEdges:Edge[] = t.getEdges();
 
         return Edge.hasMatchingEdges(edges,tEdges);
     }
@@ -68,8 +68,8 @@ export class Triangle implements TriangleInterface {
     }
 
     calculateNormal() : VertexInterface {
-        let v1v2:VertexInterface = this.v2.subtract(this.v1);
-        let v1v3:VertexInterface = this.v3.subtract(this.v1);
+        const v1v2:VertexInterface = this.v2.subtract(this.v1);
+        const v1v3:VertexInterface = this.v3.subtract(this.v1);
         return v1v2.cross(v1v3);
     }
 

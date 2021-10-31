@@ -30,7 +30,7 @@ export class BoundingBox {
     }
 
     expand(x:number, y:number, z:number) : BoundingBox {
-        let expandedBB : BoundingBox = new BoundingBox();
+        const expandedBB : BoundingBox = new BoundingBox();
         if ( x < this.minx ) {
             this.minx = x;
         }

@@ -1,20 +1,20 @@
 
 import { BoundingBox } from "./boundingbox";
-import { VertexInterface } from "./vertex";
-import { Vertex } from "./vertex";
-import { VertexFilterInterface } from "./vertexfilter";
-import { TriangleInterface } from "./triangle";
-import { Triangle } from "./triangle";
 import { Edge } from "./edge";
 import { Mesh, MeshInterface } from "./mesh";
 import { MeshExtents } from "./meshinfo";
-import { Scene } from "./scene";
 import { MeshInfo } from "./meshinfo";
+import { Scene } from "./scene";
+import { Triangle } from "./triangle";
+import { TriangleInterface } from "./triangle";
+import { Vertex } from "./vertex";
+import { VertexInterface } from "./vertex";
+import { VertexFilterInterface } from "./vertexfilter";
 
 
 export class MeshOperations {
-    static CROP_INSIDE : number = 0;
-    static CROP_OUTSIDE : number = 1;
+    static CROP_INSIDE  = 0;
+    static CROP_OUTSIDE  = 1;
 
     static rotate(mesh:MeshInterface, x:number, y:number, z:number) : MeshInterface
     {
@@ -32,8 +32,8 @@ export class MeshOperations {
     }
 
     static crop(mesh:MeshInterface, boundingBox:BoundingBox) : Scene {
-        let insideMesh:MeshInterface = new Mesh();
-        let outsideMesh:MeshInterface = new Mesh();
+        const insideMesh:MeshInterface = new Mesh();
+        const outsideMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach(function(triangle:TriangleInterface) {
             if ( triangle.v1.isInside(boundingBox) &&
                  triangle.v2.isInside(boundingBox) && 
@@ -44,14 +44,14 @@ export class MeshOperations {
                 outsideMesh.addTriangle(triangle.clone());
             }
         });
-        let scene = new Scene();
+        const scene = new Scene();
         scene.addMesh(insideMesh);
         scene.addMesh(outsideMesh);
         return scene;
     }
 
     static mirror(mesh:MeshInterface, x:boolean, y:boolean, z:boolean) : MeshInterface {
-        let mirroredMesh:MeshInterface = new Mesh();
+        const mirroredMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             mirroredMesh.addTriangle(new Triangle(
                                             triangle.v1.mirror(x,y,z),
@@ -64,7 +64,7 @@ export class MeshOperations {
 
 
     static translate(mesh:MeshInterface, offset:VertexInterface) : MeshInterface {
-        let translatedMesh:MeshInterface = new Mesh();
+        const translatedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             translatedMesh.addTriangle(new Triangle(
                                             triangle.v1.add(offset),
@@ -76,7 +76,7 @@ export class MeshOperations {
     }
 
     static translateFiltered(mesh:MeshInterface, vertexFilter:VertexFilterInterface) : MeshInterface {
-        let translatedMesh:MeshInterface = new Mesh();
+        const translatedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             translatedMesh.addTriangle(new Triangle(
                                        vertexFilter.filter(triangle.v1),
@@ -87,7 +87,7 @@ export class MeshOperations {
     }
 
     static filterVertices(mesh:MeshInterface, vertexFilter:VertexFilterInterface) : MeshInterface {
-        let filteredMesh:MeshInterface = new Mesh();
+        const filteredMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             filteredMesh.addTriangle(new Triangle(
                                        vertexFilter.filter(triangle.v1),
@@ -98,7 +98,7 @@ export class MeshOperations {
     }
 
     static scale(mesh:MeshInterface, scale:VertexInterface) : MeshInterface {
-        let scaledMesh:MeshInterface = new Mesh();
+        const scaledMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             scaledMesh.addTriangle(new Triangle(
                                             triangle.v1.scale(scale),
@@ -110,11 +110,11 @@ export class MeshOperations {
     }
 
     static scaleToSize(mesh:MeshInterface, axisName:string, size:number) {
-        let extents:MeshExtents = MeshInfo.getExtents(mesh);
+        const extents:MeshExtents = MeshInfo.getExtents(mesh);
 
-        let xScale:number = 1;
-        let yScale:number = 1;
-        let zScale:number = 1;
+        let xScale = 1;
+        let yScale = 1;
+        let zScale = 1;
     
         let axis:string = axisName;
         axis = axis.toLowerCase();
@@ -133,12 +133,12 @@ export class MeshOperations {
           xScale = zScale;
           yScale = zScale;
         }
-        let scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(xScale, yScale, zScale));
+        const scaledMesh:MeshInterface = MeshOperations.scale(mesh, new Vertex(xScale, yScale, zScale));
         return scaledMesh;
     }
 
     static flipNormals(mesh:MeshInterface) : MeshInterface {
-        let flippedMesh:MeshInterface = new Mesh();
+        const flippedMesh:MeshInterface = new Mesh();
         mesh.triangles.forEach( (triangle:TriangleInterface) => {
             flippedMesh.addTriangle(triangle.flipNormal());
         });
@@ -150,11 +150,11 @@ export class MeshOperations {
                      xSpacing:number, ySpacing:number,
                      totalCount:number) : MeshInterface {
         // Copy mesh by making new mesh with duplicate triangles
-        let combinedMesh:MeshInterface = new Mesh();
+        const combinedMesh:MeshInterface = new Mesh();
         combinedMesh.addMesh(mesh);
 
         // Figure out spacing and initial placement
-        let extents:MeshExtents = MeshInfo.getExtents(mesh);
+        const extents:MeshExtents = MeshInfo.getExtents(mesh);
         let xOffset = (extents.maxx - extents.minx) + xSpacing;
         let yOffset = 0;
         let xIndex = 1;
@@ -163,7 +163,7 @@ export class MeshOperations {
 
         // Keep going until we place all the copies
         while (totalCount > 0) {
-            let translatedMesh = MeshOperations.translate(mesh, new Vertex(xOffset, yOffset, 0) );
+            const translatedMesh = MeshOperations.translate(mesh, new Vertex(xOffset, yOffset, 0) );
             combinedMesh.addMesh(translatedMesh);
 
             // Move along X axis
@@ -183,26 +183,26 @@ export class MeshOperations {
 
     static addVerticalTriangles(mesh:MeshInterface, edges:Edge[], z:number) {
         edges.forEach( (edge:Edge) => {
-            let v1 = edge.v1;
-            let v2 = edge.v2;
-            let v3 = new Vertex(v1.x, v1.y, z);
-            let v4 = new Vertex(v2.x, v2.y, z);
-            let triangle1 = new Triangle(v1,v3,v2);
+            const v1 = edge.v1;
+            const v2 = edge.v2;
+            const v3 = new Vertex(v1.x, v1.y, z);
+            const v4 = new Vertex(v2.x, v2.y, z);
+            const triangle1 = new Triangle(v1,v3,v2);
             mesh.addTriangle(triangle1);
-            let triangle2 = new Triangle(v2,v3,v4);
+            const triangle2 = new Triangle(v2,v3,v4);
             mesh.addTriangle(triangle2);
         });
     }
 
     static addBaseAndVerticalTriangles(mesh:MeshInterface, extraZHeight:number) {
-        let extents:MeshExtents = MeshInfo.getExtents(mesh);
-        let minx = extents.minx;
-        let maxx = extents.maxx;
-        let miny = extents.miny;
-        let maxy = extents.maxy;
-        let minz = extents.minz-extraZHeight;
+        const extents:MeshExtents = MeshInfo.getExtents(mesh);
+        const minx = extents.minx;
+        const maxx = extents.maxx;
+        const miny = extents.miny;
+        const maxy = extents.maxy;
+        const minz = extents.minz-extraZHeight;
 
-        let singleEdges:Edge[] = MeshInfo.getSingleEdges(MeshInfo.getEdges(mesh));
+        const singleEdges:Edge[] = MeshInfo.getSingleEdges(MeshInfo.getEdges(mesh));
         MeshOperations.addVerticalTriangles(mesh, singleEdges, minz);
 
         // Add base
@@ -215,10 +215,10 @@ export class MeshOperations {
     // }
 
     static center(mesh:MeshInterface) : MeshInterface {
-        let extents:MeshExtents = MeshInfo.getExtents(mesh);
-        let xOffset = -1*(extents.maxx-extents.minx)/2;
-        let yOffset = -1*(extents.maxy-extents.miny)/2;
-        let zOffset = -1*(extents.maxz-extents.minz)/2;
+        const extents:MeshExtents = MeshInfo.getExtents(mesh);
+        const xOffset = -1*(extents.maxx-extents.minx)/2;
+        const yOffset = -1*(extents.maxy-extents.miny)/2;
+        const zOffset = -1*(extents.maxz-extents.minz)/2;
         return this.translate(mesh, new Vertex(xOffset,yOffset,zOffset));
     }
 }
