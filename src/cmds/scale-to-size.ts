@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
@@ -26,12 +27,12 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    console.log("infile", argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const scaledMesh:MeshInterface = MeshOperations.scaleToSize(mesh, argv.axis, argv.size);
 
-    stlFile.writeSTLFile(argv.outfile, "ScaleToSize_axis" + argv.axis + "_size" + argv.size, scaledMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "ScaleToSize_axis" + argv.axis + "_size" + argv.size, scaledMesh);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

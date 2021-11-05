@@ -2,7 +2,7 @@
 import { MeshInterface } from "../lib/mesh";
 import { MeshInfo } from "../lib/meshinfo";
 import { MeshExtents } from "../lib/meshinfo";
-import { STLFile } from "../lib/stlfile";
+import { MeshLoader } from "../lib/meshloader";
 
 exports.command = 'stats [file]'
 exports.desc = 'Print info about the specified STL file'
@@ -13,8 +13,7 @@ exports.builder = {
 }
 exports.handler = function (argv:any) {
     try {
-      const stlFile : STLFile = new STLFile();
-      const mesh:MeshInterface = stlFile.readSTLFile(argv.file);
+      const mesh:MeshInterface = MeshLoader.loadMesh(argv.file);
       const triangleCount:number = mesh.triangles.length;
       const meshExtents:MeshExtents = MeshInfo.getExtents(mesh);
       console.log({
