@@ -1,10 +1,11 @@
 
 import { BoundingBox } from "../lib/boundingbox";
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
-exports.command = 'crop [location] [minx] [miny] [minz] [maxx] [maxy] [maxz] [infile] [outfile] '
+exports.command = 'crop [location] [minx] [miny] [minz] [maxx] [maxy] [maxz] [infile] [outfile]'
 exports.desc = 'Crop the specified STL file'
 exports.builder = {
   location: {
@@ -37,12 +38,11 @@ exports.builder = {
   outfile: {
     default: '',
     demandOption: true
-  }
+  },
 }
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const boundingBox = new BoundingBox();
     boundingBox.minx = argv.minx;
@@ -55,7 +55,7 @@ exports.handler = function (argv:any) {
     const location:number = argv.location=="inside" ? MeshOperations.CROP_INSIDE : MeshOperations.CROP_OUTSIDE;
     const croppedMesh:MeshInterface = MeshOperations.crop(mesh, boundingBox).meshes[location];
 
-    stlFile.writeSTLFile(argv.outfile, "Cropped", croppedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Cropped", croppedMesh);
 
   }
   catch (e) {

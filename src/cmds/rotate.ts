@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
@@ -30,12 +31,11 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const rotatedMesh:MeshInterface = MeshOperations.rotate(mesh, argv.x, argv.y, argv.z);
 
-    stlFile.writeSTLFile(argv.outfile, "Rotate_" + argv.x + "_" + argv.y + "_" + argv.z, rotatedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Rotate_" + argv.x + "_" + argv.y + "_" + argv.z, rotatedMesh);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

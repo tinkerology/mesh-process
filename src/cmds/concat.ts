@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { STLFile } from "../lib/stlfile";
 
 exports.command = 'concat [infile1] [infile2] [outfile]'
@@ -21,14 +22,12 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh1:MeshInterface = stlFile.readSTLFile(argv.infile1);
-    const mesh2:MeshInterface = stlFile.readSTLFile(argv.infile2);
+    let mesh1:MeshInterface = MeshLoader.loadMesh(argv.infile1);
+    let mesh2:MeshInterface = MeshLoader.loadMesh(argv.infile2);
 
     mesh1.addMesh(mesh2);
     
-    stlFile.writeSTLFile(argv.outfile, "Concat_" + argv.infile1 +"_" + argv.infile2, mesh1);
-
+    (new STLFile()).writeSTLFile(argv.outfile, "Concat_" + argv.infile1 +"_" + argv.infile2, mesh1);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

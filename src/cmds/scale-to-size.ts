@@ -27,7 +27,6 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    console.log("infile", argv.infile);
     const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const scaledMesh:MeshInterface = MeshOperations.scaleToSize(mesh, argv.axis, argv.size);

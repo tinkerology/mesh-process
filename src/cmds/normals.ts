@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
@@ -23,14 +24,13 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    let mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     if ( argv.operation == 'flip') {
       mesh = MeshOperations.flipNormals(mesh);
     }
 
-    stlFile.writeSTLFile(argv.outfile, "Normals_" + argv.operation, mesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Normals_" + argv.operation, mesh);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

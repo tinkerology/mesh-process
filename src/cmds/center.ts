@@ -1,6 +1,7 @@
 
 import { MeshInterface } from "../lib/mesh";
 import { MeshInfo } from "../lib/meshinfo";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 import { VertexInterface } from "../lib/vertex";
@@ -26,8 +27,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     let xOffset = 0; 
     let yOffset = 0; 
@@ -46,7 +46,7 @@ exports.handler = function (argv:any) {
     const offset:VertexInterface = new Vertex(xOffset,yOffset,zOffset);
     const translatedMesh:MeshInterface = MeshOperations.translate(mesh, offset);
 
-    stlFile.writeSTLFile(argv.outfile, "Center_" + argv.location, translatedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Center_" + argv.location, translatedMesh);
 
   }
   catch (e) {

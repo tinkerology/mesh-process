@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
@@ -34,12 +35,11 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const combinedMesh:MeshInterface = MeshOperations.replicate(mesh, argv.xCount, argv.xSpacing, argv.ySpacing, argv.totalCount);
     
-    stlFile.writeSTLFile(argv.outfile, "Replicate_" + argv.totalCount, combinedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Replicate_" + argv.totalCount, combinedMesh);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);

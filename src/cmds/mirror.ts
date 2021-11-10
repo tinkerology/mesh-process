@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 
@@ -23,8 +24,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     let x = false; 
     let y = false; 
@@ -41,7 +41,7 @@ exports.handler = function (argv:any) {
 
     const translatedMesh:MeshInterface = MeshOperations.mirror(mesh, x, y, z);
 
-    stlFile.writeSTLFile(argv.outfile, "Mirror_" + argv.location, translatedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "Mirror_" + argv.location, translatedMesh);
 
   }
   catch (e) {

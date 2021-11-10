@@ -1,5 +1,6 @@
 
 import { MeshInterface } from "../lib/mesh";
+import { MeshLoader } from "../lib/meshloader";
 import { MeshOperations } from "../lib/meshoperations";
 import { STLFile } from "../lib/stlfile";
 import { Vertex } from "../lib/vertex";
@@ -56,15 +57,14 @@ exports.handler = function (argv:any) {
       console.log("Z threshold set to max");
       argv.zThreshhold = Number.MAX_VALUE;
     }
-    const stlFile : STLFile = new STLFile();
-    const mesh:MeshInterface = stlFile.readSTLFile(argv.infile);
+    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const translatedMesh:MeshInterface = MeshOperations.translateFiltered(mesh,
           new VertexFilterAbove(argv.xThreshold, argv.yThreshold, argv.zThreshold,
                                  new VertexFilterTranslate(new Vertex(argv.x, argv.y, argv.z) ) )
     );
 
-    stlFile.writeSTLFile(argv.outfile, "TranslateAbove_x" + argv.x + "_y" + argv.y + "_z" + argv.z, translatedMesh);
+    (new STLFile()).writeSTLFile(argv.outfile, "TranslateAbove_x" + argv.x + "_y" + argv.y + "_z" + argv.z, translatedMesh);
   }
   catch (e) {
     console.log("Error: Unable to load file\n", (e as Error).message);
