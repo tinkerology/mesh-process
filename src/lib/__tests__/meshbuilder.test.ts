@@ -19,6 +19,18 @@ test('buildConvexFanSurfaceWithEdgeVertices', () => {
     stlFile.writeSTLFile("__testout__/MeshBuilderTest_buildConvexFanSurfaceWithEdgeVertices.stl", "test", mesh);
 });
 
+test('buildConvexFanSurfaceWithEdgeVertices_only2', () => {
+    const vertices:Vertex[] = [
+        new Vertex(0,0,0),
+        new Vertex(10,10,0)
+    ];
+    const mesh:MeshInterface = MeshBuilder.buildConvexFanSurfaceWithEdgeVertices(vertices);;
+    expect(mesh.triangles.length).toBe(0);
+
+    const stlFile:STLFile = new STLFile();
+    stlFile.writeSTLFile("__testout__/MeshBuilderTest_buildConvexFanSurfaceWithEdgeVertices_only2.stl", "test", mesh);
+});
+
 test('buildRectangle', () => {
     const mesh:MeshInterface = MeshBuilder.buildRectangle(
         new Vertex(0,0,0),
