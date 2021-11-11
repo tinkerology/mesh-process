@@ -11,3 +11,13 @@ test('loadMesh_text', () => {
     const mesh:MeshInterface = MeshLoader.loadMesh("samples/cube_c.stl");
     expect(mesh.triangles.length).toBeGreaterThan(0);
 });
+
+test('loadMesh_missing', () => {
+    try {
+        MeshLoader.loadMesh("samples/cube.yyy");
+        fail();
+    }
+    catch (e) {
+        // Expected
+    }
+});
