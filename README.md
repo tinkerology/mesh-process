@@ -1,7 +1,8 @@
 # mesh-process
 
 ## Purpose
-STL file reader/writer and mesh processing library
+The mesh-process project is a library and 3D mesh processing toolchain for
+manipulating STL files. The library is a set of Typescript functional classes.
 
 ## Building
 
