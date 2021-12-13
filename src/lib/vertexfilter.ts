@@ -56,7 +56,7 @@ export class VertexFilterReplace implements VertexFilterInterface {
 
     filter(vertex : VertexInterface) : VertexInterface {
         if ( vertex.x == this.v1.x && vertex.y == this.v1.y && vertex.z == this.v1.z ) {
-            console.log("Replacing vertex: ", vertex);
+            // console.log("Replacing vertex: ", vertex);
             return this.v2;
         }
         return vertex;
