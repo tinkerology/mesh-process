@@ -17,6 +17,7 @@
     "fix:lint": "eslint src --ext .ts --fix",
     "jtest": "mkdir -p __testout__ || jest",
     "jtestcov": "mkdir -p __testout__ || jest --coverage",
+    "jtestdeb": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
