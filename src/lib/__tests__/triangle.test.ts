@@ -1,6 +1,7 @@
 
 import { Edge } from '../edge';
 import { Triangle, TriangleInterface } from '../triangle';
+import { TriangleFilterInterface, TriangleFilterNoOp } from '../trianglefilter';
 import { Vertex, VertexInterface } from '../vertex';
 
 test('constructor', () => {
@@ -12,6 +13,16 @@ test('constructor', () => {
     expect(t1.v1).toStrictEqual(new Vertex(1,2,3));
     expect(t1.v2).toStrictEqual(new Vertex(10,20,30));
     expect(t1.v3).toStrictEqual(new Vertex(10,0,30));
+});
+
+test('constructor', () => {
+    const v1:VertexInterface = new Vertex(1,2,3);
+    const v2:VertexInterface = new Vertex(10,20,30);
+    const v3:VertexInterface = new Vertex(10,0,30);
+    const t1:TriangleInterface = new Triangle(v1,v2,v3);
+
+    const noopFilter:TriangleFilterInterface = new TriangleFilterNoOp();
+    expect(noopFilter.filter(t1)).toStrictEqual(t1);
 });
 
 test('clone', () => {
@@ -79,6 +90,20 @@ test('isAdjacent', () => {
     expect(t2.isAdjacent(t5)).toBe(false);
 });
 
+test('hasVertex', () => {
+    const v1:VertexInterface = new Vertex(1,2,3);
+    const v2:VertexInterface = new Vertex(10,20,30);
+    const v3:VertexInterface = new Vertex(10,0,30);
+    const v4:VertexInterface = new Vertex(-10,0,30);
+
+    const t1:TriangleInterface = new Triangle(v1,v2,v3);
+
+    expect(t1.hasVertex(v1)).toBe(true);
+    expect(t1.hasVertex(v2)).toBe(true);
+    expect(t1.hasVertex(v3)).toBe(true);
+    expect(t1.hasVertex(v4)).toBe(false);
+});
+
 test('calculateNormal', () => {
     const v1:VertexInterface = new Vertex(0,0,0);
     const v2:VertexInterface = new Vertex(0,20,0);
@@ -134,5 +159,16 @@ test('getCenterCentroid', () => {
     expect(centroid.x).toBe(20/3);
     expect(centroid.y).toBe(20/3);
     expect(centroid.z).toBe(0);
+});
+
+test('getArea', () => {
+    const v1:VertexInterface = new Vertex(0,0,0);
+    const v2:VertexInterface = new Vertex(0,20,0);
+    const v3:VertexInterface = new Vertex(20,0,0);
+
+    const t1:TriangleInterface = new Triangle(v1,v2,v3);
+
+    const area = t1.getArea();
+    expect(area).toBe(20*20/2);
 });
 
