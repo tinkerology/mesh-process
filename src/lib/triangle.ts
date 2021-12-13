@@ -3,16 +3,6 @@ import { Edge } from "./edge";
 import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 
-export interface TriangleFilterInterface {
-    filter(vertex : TriangleInterface) : TriangleInterface;
-}
-
-export class TriangleFilterNoOp implements TriangleFilterInterface {
-    filter(triangle : TriangleInterface) : TriangleInterface {
-        return triangle;
-    }
-}
-
 export interface TriangleInterface {
     v1 : VertexInterface;
     v2 : VertexInterface;
@@ -23,12 +13,16 @@ export interface TriangleInterface {
 
     isEqual(t : TriangleInterface) : boolean;
     isAdjacent( t : TriangleInterface) : boolean;
+    hasVertex( v : VertexInterface) : boolean;
 
     calculateNormal() : VertexInterface;
     flipNormal() : TriangleInterface;
     getVertices() : VertexInterface[];
     getEdges() : Edge[];
     getCenterCentroid() : VertexInterface;
+
+    getPerimeter() : number;
+    getArea() : number;
 }
 
 export class Triangle implements TriangleInterface {
@@ -55,12 +49,18 @@ export class Triangle implements TriangleInterface {
         return matchingEdges.length == 3;
     }
 
-    isAdjacent( t : TriangleInterface) : boolean
-    {
+    isAdjacent( t : TriangleInterface) : boolean {
         const edges:Edge[] = this.getEdges();
         const tEdges:Edge[] = t.getEdges();
 
         return Edge.hasMatchingEdges(edges,tEdges);
+    }
+
+    hasVertex( v : VertexInterface) : boolean {
+        if ( this.v1.isEqual(v) || this.v2.isEqual(v) || this.v3.isEqual(v) ) {
+            return true;
+        }
+        return false;
     }
 
     toString() : string {
@@ -91,5 +91,18 @@ export class Triangle implements TriangleInterface {
         return new Vertex((this.v1.x+this.v2.x+this.v3.x)/3,
                           (this.v1.y+this.v2.y+this.v3.y)/3,
                           (this.v1.z+this.v2.z+this.v3.z)/3);   
+    }
+
+    getPerimeter() : number {
+        const edges:Edge[] = this.getEdges();
+        const perimeter = edges[0].length() + edges[1].length() + edges[2].length();
+        return perimeter;
+    }
+
+    getArea() : number {
+        const edges:Edge[] = this.getEdges();
+        const s = this.getPerimeter()/2;
+        const area = Math.sqrt(s * ( s-edges[0].length()) * (s-edges[1].length()) * (s-edges[2].length()));
+        return area;
     }
 }
