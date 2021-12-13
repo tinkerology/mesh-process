@@ -97,19 +97,16 @@ export class MeshInfo {
         return [connectedEdges,disconnectedEdges];
     }
 
-    static getConnectedEdges(edges:Edge[]) : Edge[] {
-        let connectedEdges:Edge[] = [];
-        let done:boolean = (edges.length == 0);
-        while (!done) {
-            const v1Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v1);
-            connectedEdges = connectedEdges.concat(v1Connections[0]);
-            const v2Connections:Edge[][] = this.getEdgesAtVertex(edges, edges[0].v2);
-            connectedEdges = connectedEdges.concat(v2Connections[0]);
-
-            if (v1Connections[0].length == 0 && v2Connections[0].length == 0 ) {
-                done = true;
-            }
-        }
+    static getEdgesConnectedTo(edges:Edge[], edgesToSearch:Edge[]):Edge[] {
+        const connectedEdges:Edge[] = [];
+        edges.forEach( (edge:Edge) => {
+            edgesToSearch.forEach( (edgeToSearch:Edge) => {
+                if ( edgeToSearch.isConnected(edge) && !edgeToSearch.isEqual(edge) ) {
+                    // TODO: Should I copy this Edge?
+                    connectedEdges.push(edge);
+                }
+            });
+        });
         return connectedEdges;
     }
 
@@ -128,17 +125,6 @@ export class MeshInfo {
         });
         return vertexDistances;
     }
-
-    // static getEdgeChain(edges:Edge[]) : Edge[] {
-    //     let edgeChain:Edge[] = [];
-
-    //     // edges.forEach( (edge:Edge) => {
-    //     //     if ( )
-    //     //     edgeChain.push(edge);
-    //     // });
-
-    //     return edgeChain;
-    // }
 
     static logEdgesCounts(edges:Edge[]) {
         edges.forEach( (edge:Edge) => {
