@@ -44,9 +44,14 @@ test('isConnected', () => {
     const e4:Edge = new Edge(v3,v4);
     const e5:Edge = new Edge(v4,v5);
 
-    expect(e1.isConnected(e3)).toBe(true);
+    // Same edge in reverse
+    expect(e1.isConnected(e3)).toBe(false);
+
     expect(e1.isConnected(e4)).toBe(true);
-    expect(e2.isConnected(e3)).toBe(true);
+    console.log("e2 ", e2);
+    console.log("e3 ", e3);
+    // Same edge = false
+    expect(e2.isConnected(e3)).toBe(false);
     expect(e2.isConnected(e4)).toBe(true);
     expect(e2.isConnected(e4)).toBe(true);
     expect(e1.isConnected(e5)).toBe(false);
@@ -79,6 +84,7 @@ test('orderEdges', () => {
     const e3:Edge = new Edge(v2,v1);
     const e4:Edge = new Edge(v3,v2);
     const e5:Edge = new Edge(v4,v1);
+    const e6:Edge = new Edge(v3,v4);
 
     expect(Edge.orderEdges(e1,e2)).toStrictEqual([e1,e2]);
     expect(Edge.orderEdges(e2,e1)).toStrictEqual([e1,e2]);
@@ -90,6 +96,13 @@ test('orderEdges', () => {
 
     // if (e2.v2.isEqual(e1.v1))
     expect(Edge.orderEdges(e1,e5)).toStrictEqual([e5,e1]);
+
+    // if (e1.v2.isEqual(e2.v2))
+    expect(Edge.orderEdges(e1,e4)).toStrictEqual([e1, new Edge(e4.v2, e4.v1)]);
+
+    // No matching vertices
+    expect(Edge.orderEdges(e1,e6)).toStrictEqual([]);
+
 });
 
 test('findMatchingEdges', () => {
