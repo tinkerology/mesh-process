@@ -18,6 +18,10 @@ export class Edge {
     }
 
     isConnected(e:Edge) : boolean {
+        if ( this.isEqual(e) ) {
+            return false;
+        }
+        
         if ( (this.v1.isEqual(e.v1) || this.v2.isEqual(e.v2)) ||
              (this.v1.isEqual(e.v2) || this.v2.isEqual(e.v1)) ) {
             return true;
