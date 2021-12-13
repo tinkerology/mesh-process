@@ -1,4 +1,5 @@
 
+import { Edge } from "../lib/edge";
 import { MeshInterface } from "../lib/mesh";
 import { MeshInfo } from "../lib/meshinfo";
 import { MeshExtents } from "../lib/meshinfo";
@@ -16,10 +17,12 @@ exports.handler = function (argv:any) {
       const mesh:MeshInterface = MeshLoader.loadMesh(argv.file);
       const triangleCount:number = mesh.triangles.length;
       const meshExtents:MeshExtents = MeshInfo.getExtents(mesh);
+      const singleEdges:Edge[] = MeshInfo.getSingleEdges(MeshInfo.getEdges(mesh));
       console.log({
           "file": argv.file,
           "triangleCount" : triangleCount,
-          "meshExtents" : meshExtents
+          "meshExtents" : meshExtents,
+          "singleEdgeCount" : singleEdges.length
       });
     }
     catch (e) {
