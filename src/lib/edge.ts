@@ -51,6 +51,21 @@ export class Edge {
         return [];
     }
 
+    static sortEdges(edges:Edge[]) : Edge[] {
+        var sortedEdges: Edge[] = edges.sort((edge1, edge2) => {
+            if (edge2.v1.isEqual(edge2.v2)) {
+                return 1;
+            }
+        
+            if (edge1.v2.isEqual(edge2.v1)) {
+                return -1;
+            }
+        
+            return 0;
+        });
+        return sortedEdges;
+    }
+
     static findMatchingEdges(edges1:Edge[], edges2:Edge[]) : Edge[]
     {
         const matchingEdges:Edge[] = [];
@@ -76,19 +91,3 @@ export class Edge {
         return false;
     }
 }
-
-// export class EdgeSet {
-//     edges : Edge[];
-
-//     constructor() {
-//         this.edges = [];
-//     }
-
-//     addEdge(e:Edge) {
-//         this.edges.push(e);
-//     }
-
-//     containsEdge(e:Edge) : boolean {
-//         return this.edges.some( (edge, index, array) => { return e.equal(edge) } );
-//     }
-// }
