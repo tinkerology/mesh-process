@@ -16,6 +16,25 @@ export class MeshOperations {
     static CROP_INSIDE  = 0;
     static CROP_OUTSIDE  = 1;
 
+    static removeTriangles(mesh:MeshInterface, trianglesToRemove:TriangleInterface[]) : MeshInterface
+    {
+        const removedMesh = new Mesh();
+
+        mesh.triangles.forEach(function(triangle:TriangleInterface) {
+            let found = false;
+            trianglesToRemove.forEach( function(triangleToRemove:TriangleInterface) {
+                if ( triangle.isEqual(triangleToRemove) ) {
+                    found = true;
+                }
+            });
+            if ( !found ) {
+                removedMesh.addTriangle(triangle);
+            }
+        });
+
+        return removedMesh;
+    }
+
     static rotate(mesh:MeshInterface, x:number, y:number, z:number) : MeshInterface
     {
         const rotatedMesh = new Mesh();
@@ -210,9 +229,26 @@ export class MeshOperations {
         mesh.addTriangle(new Triangle(new Vertex(minx,miny,minz), new Vertex(minx,maxy,minz), new Vertex(maxx,maxy,minz)));
     }
 
-    // static closeHoles(mesh:MeshInterface) {
+    static closeHoles(mesh:MeshInterface, edges:Edge[]) : MeshInterface {
 
-    // }
+        // Check case where there are less than 3 edges
+        if ( edges.length < 3 ) {
+            return mesh;
+        }
+
+        const closedMesh = mesh.clone();
+
+        // // Check simple degeneratecase of 3 edges
+        // if ( edges.length == 3 ) {
+        //     const triangle = new Triangle(edges[0], edges[1], edges[2]);
+        //     closedMesh.addTriangle(triangle);
+        //     return closedMesh;
+        // }
+
+        // Find center of edges
+
+        return closedMesh;
+    }
 
     static center(mesh:MeshInterface) : MeshInterface {
         const extents:MeshExtents = MeshInfo.getExtents(mesh);
