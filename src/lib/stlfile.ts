@@ -8,8 +8,6 @@ import { Triangle } from "./triangle";
 import { VertexInterface } from "./vertex";
 import { Vertex } from "./vertex";
 
-// const fs = require("fs");
-
 // This file is MIT license due to copying code from:
 // https://github.com/johannesboyne/node-stl
 // This software is released under the MIT license:
@@ -31,22 +29,11 @@ import { Vertex } from "./vertex";
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export interface STLFileInterface {
-    readSTLFile(path: string) : MeshInterface;
-    readSTLBuffer(buffer : Buffer) : MeshInterface;
-    readSTLString(buffer : string) : MeshInterface;
-    writeSTLFile(path:string, name:string, mesh:MeshInterface) : void;
-    writeSTLString(name: string, mesh:MeshInterface) : string;
-}
-
-export class STLFile implements STLFileInterface {
+export class STLFile {
 
     readSTLFile(path: string) : MeshInterface {
-        // console.log("readSTLFile: " + path);
-
         const buffer : Buffer = fs.readFileSync(path);
         const isBinary : boolean = this._isBinary(buffer);
-        // console.log("isBinary: " + isBinary);
         if ( isBinary ) {
             return this.readSTLBuffer(buffer);
         }
