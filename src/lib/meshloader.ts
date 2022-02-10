@@ -3,6 +3,10 @@ import { Mesh } from "./mesh";
 import { MeshInterface } from "./mesh";
 import { STLFile } from "./stlfile";
 
+export enum MeshFileTypes {
+    UNKNOWN = 0,
+    STL = 1,
+}
 export class MeshLoader {
 
     static loadMesh(filename:string) : MeshInterface {
@@ -16,4 +20,7 @@ export class MeshLoader {
         return mesh;
     }
 
+    static saveMesh(mesh:MeshInterface, name:string, filename:string) {
+        (new STLFile()).writeSTLFile(filename, name, mesh);
+    }
 }
