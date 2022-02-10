@@ -1,4 +1,5 @@
 
+import { VertexInterface } from "..";
 import { Edge } from "./edge";
 
 /**
@@ -62,37 +63,86 @@ export class EdgeSet {
      * Merges edgeSet into this EdgeSet.
      * @param edgeSet 
      */
-    merge( edgeSet:EdgeSet ) {
+    merge( edgeSet:EdgeSet ) : EdgeSet {
+        const mergedEdgeSet = new EdgeSet(this.edges);
         edgeSet.edges.forEach( (e) => {
-            this.add(e);
+            mergedEdgeSet.add(e);
         });
+        return mergedEdgeSet;
     }
 
     /**
      * Remove all edges in edgeSet from this EdgeSet.
      * @param edgeSet 
      */
-    removeAll(edgeSet:EdgeSet ) {
-        edgeSet.edges.forEach( (e) => {
-            this.remove(e);
-        });
+    removeAll(edgeSet:EdgeSet ) : EdgeSet {
+        const newEdges : Edge[] = this.edges.filter( (e) => (edgeSet.indexOf(e) == -1) );
+        const removedEdgeSet = new EdgeSet(newEdges);
+        return removedEdgeSet;
     }
 
-    addAllConnected(edgeSet:EdgeSet) {
+    /**
+     * Method to add all connected edges from the 
+     * specified EdgeSet into the current one.
+     * @param edgeSet 
+     */
+    addAllConnected(edgeSet:EdgeSet) : EdgeSet {
+        const result = new EdgeSet(this.edges);
+        let origEdgeSet = new EdgeSet(edgeSet.edges);
         let someAdded = true;
         while ( someAdded ) {
             someAdded = false;
 
             // Go through all the edges in edgeSet and see if they are connected to this EdgeSet
-            for ( let i=0; i < edgeSet.edges.length-1; i++) {
-                if ( this.isConnectedTo(edgeSet.edges[i]) ) {
-                    this.add(edgeSet.edges[i]);
-                    edgeSet.remove(edgeSet.edges[1]);
+            for ( let i=0; i < origEdgeSet.edges.length-1; i++) {
+                if ( result.isConnectedTo(origEdgeSet.edges[i]) ) {
+                    result.add(origEdgeSet.edges[i]);
 
                     // This will cause it to keep going until no possible connections left
                     someAdded = true;
                 }
             }
+            const beforeLength = origEdgeSet.length();
+            origEdgeSet = origEdgeSet.removeAll(result);
+            const afterLength = origEdgeSet.length();
+
+            // See if anything was reall added
+            if ( beforeLength == afterLength ) {
+                someAdded = false;
+            }
         }
+
+        return result;
+    }
+
+    sort() : EdgeSet {
+        var sortedEdges: Edge[] = this.edges.sort((edge1, edge2) => {
+            if (edge2.v1.isEqual(edge2.v2)) {
+                return 1;
+            }
+        
+            if (edge1.v2.isEqual(edge2.v1)) {
+                return -1;
+            }
+        
+            return 0;
+        });
+        return new EdgeSet(sortedEdges);
+    }
+
+
+    toVertices() : VertexInterface[] {
+        const vertices:VertexInterface[] = [];
+        this.edges.forEach( (e) => {
+            if ( !vertices.includes(e.v1) ) {
+                vertices.push(e.v1);
+            }
+            if ( !vertices.includes(e.v2) ) {
+                vertices.push(e.v2);
+            }
+        });
+        const uniqVertices = vertices.filter((vertex, i, arr) => arr.findIndex(v => v.x === vertex.x && v.y === vertex.y && v.z === vertex.z) === i
+        );
+        return uniqVertices;
     }
 }
