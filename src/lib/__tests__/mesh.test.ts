@@ -9,6 +9,24 @@ test('contructor', () => {
     expect(mesh.triangles.length).toBe(0);
 });
 
+test('clone', () => {
+    const mesh:MeshInterface = new Mesh();
+
+    const clone1 = mesh.clone();
+    expect(clone1.triangles.length).toBe(0);
+
+    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
+    expect(mesh.triangles.length).toBe(1);
+    const clone2 = mesh.clone();
+    expect(clone2.triangles.length).toBe(1);
+
+    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
+    expect(mesh.triangles.length).toBe(2);
+    const clone3 = mesh.clone();
+    expect(clone3.triangles.length).toBe(2);
+});
+
+
 test('addTriangle', () => {
     const mesh:MeshInterface = new Mesh();
     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));

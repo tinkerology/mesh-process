@@ -1,7 +1,10 @@
 
 import { Edge } from '../edge';
 import { Mesh, MeshInterface } from '../mesh';
+import { MeshBuilder } from '../meshbuilder';
 import { MeshExtents, MeshInfo } from '../meshinfo';
+// import { MeshLogger } from '../meshlogger';
+import { MeshOperations } from '../meshoperations';
 import { Triangle } from '../triangle';
 import { Vertex, VertexInterface } from '../vertex';
 
@@ -35,13 +38,26 @@ test('getEdges', () => {
     expect(edges.length).toBe(6);
 });
 
-test('getSingleEdges', () => {
+test('getSingleEdges1', () => {
     const mesh:MeshInterface = new Mesh();
     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
     mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
     const edges:Edge[] = MeshInfo.getEdges(mesh);
     const singleEdges:Edge[] = MeshInfo.getSingleEdges(edges);
     expect(singleEdges.length).toBe(4);
+});
+
+test('getSingleEdges2', () => {
+    const mesh:MeshInterface = MeshBuilder.buildCuboid( new Vertex(0,0,0), 10, 10, 10);
+    const edges:Edge[] = MeshInfo.getEdges(mesh);
+    expect(edges.length).toBe(36);
+    // MeshLogger.logMesh(mesh);
+    const mesh2 = MeshOperations.removeTriangles( mesh,
+        [new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(10,0,10))] );
+    const edges2:Edge[] = MeshInfo.getEdges(mesh2);
+    expect(edges2.length).toBe(33);
+    const singleEdges:Edge[] = MeshInfo.getSingleEdges(edges2);
+    expect(singleEdges.length).toBe(3);
 });
 
 test('getEdgesAtVertex', () => {
