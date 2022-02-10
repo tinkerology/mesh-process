@@ -69,7 +69,7 @@ export class MeshInfo {
         edges.forEach( (edge:Edge) => {
             let count = 0;
             for ( const edgeToCount of edges ) {
-                if ( edge.isEqual(edgeToCount ) ) {
+                if ( edge.isEqual(edgeToCount) ) {
                     count++;
                 }
                 if ( count > 1 ) {
