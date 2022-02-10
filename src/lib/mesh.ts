@@ -8,6 +8,8 @@ export interface MeshInterface {
     addTriangle(triangle : TriangleInterface) : MeshInterface;
 
     addMesh(mesh : MeshInterface) : MeshInterface;
+
+    clone() : MeshInterface;
 }
 
 export class Mesh implements MeshInterface {
@@ -25,5 +27,15 @@ export class Mesh implements MeshInterface {
     addMesh(mesh : MeshInterface) : MeshInterface {
         this.triangles.push(...mesh.triangles);
         return this;
+    }
+
+    clone() : MeshInterface {
+        const cloneMesh = new Mesh();
+
+        this.triangles.forEach( triangle => {
+            cloneMesh.addTriangle(triangle.clone() );
+        });
+
+        return cloneMesh;
     }
 } 
