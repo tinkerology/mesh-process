@@ -1,12 +1,11 @@
-
-import { TriangleInterface } from "./triangle";
+import { TriangleInterface } from './triangle';
 
 export interface TriangleFilterInterface {
-    filter(vertex : TriangleInterface) : TriangleInterface;
+    filter(vertex: TriangleInterface): TriangleInterface;
 }
 
 export class TriangleFilterNoOp implements TriangleFilterInterface {
-    filter(triangle : TriangleInterface) : TriangleInterface {
+    filter(triangle: TriangleInterface): TriangleInterface {
         return triangle;
     }
 }

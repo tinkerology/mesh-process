@@ -1,4 +1,3 @@
-
 import { Edge } from '../edge';
 import { Mesh, MeshInterface } from '../mesh';
 import { MeshBuilder } from '../meshbuilder';
@@ -9,8 +8,8 @@ import { Triangle } from '../triangle';
 import { Vertex, VertexInterface } from '../vertex';
 
 test('MeshExtents_extend', () => {
-    const extents:MeshExtents = new MeshExtents();
-    extents.extend(new Vertex(10,20,30));
+    const extents: MeshExtents = new MeshExtents();
+    extents.extend(new Vertex(10, 20, 30));
     expect(extents.minx).toBe(10);
     expect(extents.miny).toBe(20);
     expect(extents.minz).toBe(30);
@@ -20,8 +19,14 @@ test('MeshExtents_extend', () => {
 });
 
 test('getExtents', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
     expect(MeshInfo.getExtents(mesh).minx).toBe(0);
     expect(MeshInfo.getExtents(mesh).miny).toBe(0);
     expect(MeshInfo.getExtents(mesh).minz).toBe(0);
@@ -31,76 +36,164 @@ test('getExtents', () => {
 });
 
 test('getEdges', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
     expect(edges.length).toBe(6);
 });
 
 test('getSingleEdges1', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
-    const singleEdges:Edge[] = MeshInfo.getSingleEdges(edges);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
+    const singleEdges: Edge[] = MeshInfo.getSingleEdges(edges);
     expect(singleEdges.length).toBe(4);
 });
 
 test('getSingleEdges2', () => {
-    const mesh:MeshInterface = MeshBuilder.buildCuboid( new Vertex(0,0,0), 10, 10, 10);
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
+    const mesh: MeshInterface = MeshBuilder.buildCuboid(
+        new Vertex(0, 0, 0),
+        10,
+        10,
+        10
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
     expect(edges.length).toBe(36);
     // MeshLogger.logMesh(mesh);
-    const mesh2 = MeshOperations.removeTriangles( mesh,
-        [new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(10,0,10))] );
-    const edges2:Edge[] = MeshInfo.getEdges(mesh2);
+    const mesh2 = MeshOperations.removeTriangles(mesh, [
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(10, 0, 10)
+        ),
+    ]);
+    const edges2: Edge[] = MeshInfo.getEdges(mesh2);
     expect(edges2.length).toBe(33);
-    const singleEdges:Edge[] = MeshInfo.getSingleEdges(edges2);
+    const singleEdges: Edge[] = MeshInfo.getSingleEdges(edges2);
     expect(singleEdges.length).toBe(3);
 });
 
 test('getEdgesAtVertex', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
     expect(edges.length).toBe(6);
 
     // Test for partial match
-    const edgesAtVertex1 = MeshInfo.getEdgesAtVertex(edges, new Vertex(0,0,0));
+    const edgesAtVertex1 = MeshInfo.getEdgesAtVertex(
+        edges,
+        new Vertex(0, 0, 0)
+    );
     expect(edgesAtVertex1.length).toBe(2);
-    const connectedEdges:Edge[] = edgesAtVertex1[0];
+    const connectedEdges: Edge[] = edgesAtVertex1[0];
     expect(connectedEdges.length).toBe(4);
-    const disconnectedEdges:Edge[] = edgesAtVertex1[1];
+    const disconnectedEdges: Edge[] = edgesAtVertex1[1];
     expect(disconnectedEdges.length).toBe(2);
 
     // Test for no matches
-    const edgesAtVertex2 = MeshInfo.getEdgesAtVertex(edges, new Vertex(100,100,100));
+    const edgesAtVertex2 = MeshInfo.getEdgesAtVertex(
+        edges,
+        new Vertex(100, 100, 100)
+    );
     expect(edgesAtVertex2.length).toBe(2);
     expect(edgesAtVertex2[0].length).toBe(0);
     expect(edgesAtVertex2[1].length).toBe(6);
 });
 
 test('getEdgesConnectedTo', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    mesh.addTriangle(new Triangle(new Vertex(100,100,100), new Vertex(110,100,100), new Vertex(100,110,110)));
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(100, 100, 100),
+            new Vertex(110, 100, 100),
+            new Vertex(100, 110, 110)
+        )
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
     expect(edges.length).toBe(9);
-    const connectedEdges1 = MeshInfo.getEdgesConnectedTo([new Edge(new Vertex(0,0,0), new Vertex(10,0,0))], edges);
+    const connectedEdges1 = MeshInfo.getEdgesConnectedTo(
+        [new Edge(new Vertex(0, 0, 0), new Vertex(10, 0, 0))],
+        edges
+    );
     expect(connectedEdges1.length).toBe(4);
-    const connectedEdges2 = MeshInfo.getEdgesConnectedTo([new Edge(new Vertex(100,100,100), new Vertex(11,0,0))], edges);
+    const connectedEdges2 = MeshInfo.getEdgesConnectedTo(
+        [new Edge(new Vertex(100, 100, 100), new Vertex(11, 0, 0))],
+        edges
+    );
     expect(connectedEdges2.length).toBe(2);
 });
 
 test('getEdgeLengths', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const edges:Edge[] = MeshInfo.getEdges(mesh);
-    const lengths:number[] = MeshInfo.getEdgeLengths(edges);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const edges: Edge[] = MeshInfo.getEdges(mesh);
+    const lengths: number[] = MeshInfo.getEdgeLengths(edges);
     expect(lengths.length).toBe(6);
     expect(lengths[0]).toBe(10);
 });
@@ -115,25 +208,64 @@ test('getEdgeLengths', () => {
 // });
 
 test('getVertices', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const vertices:VertexInterface[] = MeshInfo.getVertices(mesh);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const vertices: VertexInterface[] = MeshInfo.getVertices(mesh);
     expect(vertices.length).toBe(6);
 });
 
 test('getVertexDistances', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
-    const vertices:VertexInterface[] = MeshInfo.getVertices(mesh);
-    const distances:number[] = MeshInfo.getVertexDistances(new Vertex(0,0,0), vertices);
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
+    const vertices: VertexInterface[] = MeshInfo.getVertices(mesh);
+    const distances: number[] = MeshInfo.getVertexDistances(
+        new Vertex(0, 0, 0),
+        vertices
+    );
     expect(distances.length).toBe(6);
 });
 
 test('logEdgeCounts', () => {
-    const mesh:MeshInterface = new Mesh();
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,0)));
-    mesh.addTriangle(new Triangle(new Vertex(0,0,0), new Vertex(10,0,0), new Vertex(0,10,10)));
+    const mesh: MeshInterface = new Mesh();
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 0)
+        )
+    );
+    mesh.addTriangle(
+        new Triangle(
+            new Vertex(0, 0, 0),
+            new Vertex(10, 0, 0),
+            new Vertex(0, 10, 10)
+        )
+    );
     MeshInfo.logEdgesCounts(MeshInfo.getEdges(mesh));
 });

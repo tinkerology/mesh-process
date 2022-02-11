@@ -1,8 +1,7 @@
-
-import { MeshInterface } from "./mesh";
+import { MeshInterface } from './mesh';
 
 export class Scene {
-    meshes:MeshInterface[];
+    meshes: MeshInterface[];
 
     constructor() {
         this.meshes = [];
@@ -12,7 +11,7 @@ export class Scene {
         this.meshes = [];
     }
 
-    addMesh(mesh:MeshInterface) {
+    addMesh(mesh: MeshInterface) {
         this.meshes.push(mesh);
     }
 }

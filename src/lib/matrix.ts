@@ -1,8 +1,6 @@
-
 export class Matrix {
-
     // https://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
-    static multiply(a:number[][], b:number[][]) : number[][] {
+    static multiply(a: number[][], b: number[][]): number[][] {
         const result = new Array<number[]>(a.length);
         for (let r = 0; r < a.length; ++r) {
             result[r] = new Array(b[0].length);

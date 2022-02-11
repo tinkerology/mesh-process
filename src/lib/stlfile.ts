@@ -1,12 +1,11 @@
+import * as fs from 'fs';
 
-import * as fs from "fs";
-
-import { MeshInterface } from "./mesh";
-import { Mesh } from "./mesh";
-import { TriangleInterface } from "./triangle";
-import { Triangle } from "./triangle";
-import { VertexInterface } from "./vertex";
-import { Vertex } from "./vertex";
+import { MeshInterface } from './mesh';
+import { Mesh } from './mesh';
+import { TriangleInterface } from './triangle';
+import { Triangle } from './triangle';
+import { VertexInterface } from './vertex';
+import { Vertex } from './vertex';
 
 // This file is MIT license due to copying code from:
 // https://github.com/johannesboyne/node-stl
@@ -30,74 +29,83 @@ import { Vertex } from "./vertex";
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export class STLFile {
-
-    readSTLFile(path: string) : MeshInterface {
-        const buffer : Buffer = fs.readFileSync(path);
-        const isBinary : boolean = this._isBinary(buffer);
-        if ( isBinary ) {
+    readSTLFile(path: string): MeshInterface {
+        const buffer: Buffer = fs.readFileSync(path);
+        const isBinary: boolean = this._isBinary(buffer);
+        if (isBinary) {
             return this.readSTLBuffer(buffer);
         }
         return this.readSTLString(buffer.toString());
     }
-    
-    readSTLBuffer(buffer : Buffer) : MeshInterface {
+
+    readSTLBuffer(buffer: Buffer): MeshInterface {
         // (borrowed some code from here: https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/STLLoader.js)
 
         const mesh = new Mesh();
         const faces = buffer.readUInt32LE(80);
         const dataOffset = 84;
         const faceLength = 12 * 4 + 2;
-    
+
         for (let face = 0; face < faces; face++) {
-          const start = dataOffset + face * faceLength;
-    
-          const vertexes = new Array(3);
-    
-          for (let i = 1; i <= 3; i++) {
-            const vertexstart = start + i * 12;
-    
-            vertexes[i - 1] = new Vertex(
-              buffer.readFloatLE(vertexstart),
-              buffer.readFloatLE(vertexstart + 4),
-              buffer.readFloatLE(vertexstart + 8)
+            const start = dataOffset + face * faceLength;
+
+            const vertexes = new Array(3);
+
+            for (let i = 1; i <= 3; i++) {
+                const vertexstart = start + i * 12;
+
+                vertexes[i - 1] = new Vertex(
+                    buffer.readFloatLE(vertexstart),
+                    buffer.readFloatLE(vertexstart + 4),
+                    buffer.readFloatLE(vertexstart + 8)
+                );
+            }
+
+            mesh.addTriangle(
+                new Triangle(vertexes[0], vertexes[1], vertexes[2])
             );
-          }
-    
-          mesh.addTriangle(new Triangle(vertexes[0], vertexes[1], vertexes[2]));
         }
-    
+
         return mesh;
     }
 
-    readSTLString(buffer : string) : MeshInterface {
+    readSTLString(buffer: string): MeshInterface {
         // Create a new Mesh
-        const mesh:MeshInterface = new Mesh();
+        const mesh: MeshInterface = new Mesh();
 
         // yes, this is the regular expression, matching the vertexes
         // it was kind of tricky but it is fast and does the job
-        const vertexes : string[]|null = buffer.match(
+        const vertexes: string[] | null = buffer.match(
             /facet\s+normal\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+outer\s+loop\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+endloop\s+endfacet/g
         );
-    
-        if ( vertexes != null ) {
-            vertexes.forEach( (vert) => {
-                if ( vert != null ) {
+
+        if (vertexes != null) {
+            vertexes.forEach((vert) => {
+                if (vert != null) {
                     // console.log("   vert string: " + vert);
-                    const vectors : RegExpMatchArray|null = vert.match(
+                    const vectors: RegExpMatchArray | null = vert.match(
                         /vertex\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s+([-+]?\b(?:[0-9]*\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\b)\s/g
                     );
-                    if ( vectors != null ) {
+                    if (vectors != null) {
                         const triangle = new Array(3);
                         vectors.forEach((vertex, i) => {
-                            const xyz : RegExpMatchArray|null = vertex
-                            .replace("vertex", "")
-                            .match(/[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?/g);
-                
-                            if ( xyz != null ) {
-                                triangle[i] = new Vertex(Number(xyz[0]), Number(xyz[1]), Number(xyz[2]));
+                            const xyz: RegExpMatchArray | null = vertex
+                                .replace('vertex', '')
+                                .match(
+                                    /[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?/g
+                                );
+
+                            if (xyz != null) {
+                                triangle[i] = new Vertex(
+                                    Number(xyz[0]),
+                                    Number(xyz[1]),
+                                    Number(xyz[2])
+                                );
                             }
                         });
-                        mesh.addTriangle(new Triangle(triangle[0],triangle[1],triangle[2]));
+                        mesh.addTriangle(
+                            new Triangle(triangle[0], triangle[1], triangle[2])
+                        );
                     }
                 }
             });
@@ -105,33 +113,65 @@ export class STLFile {
         return mesh;
     }
 
-    writeSTLFile(path:string, name:string, mesh:MeshInterface) {
-        fs.writeFile(path, this.writeSTLString(name, mesh),  function(err:any) {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log("STL File created: ", name);
+    writeSTLFile(path: string, name: string, mesh: MeshInterface) {
+        fs.writeFile(
+            path,
+            this.writeSTLString(name, mesh),
+            function (err: any) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log('STL File created: ', name);
+                }
             }
-        });
+        );
     }
 
-    writeSTLString(name: string, mesh:MeshInterface) : string {
-        let buffer : string = "solid " + name + "\n";
+    writeSTLString(name: string, mesh: MeshInterface): string {
+        let buffer: string = 'solid ' + name + '\n';
 
         // Write out all the triangles
-        mesh.triangles.forEach(function(triangle:TriangleInterface) {
-            const normal : VertexInterface = triangle.calculateNormal();
+        mesh.triangles.forEach(function (triangle: TriangleInterface) {
+            const normal: VertexInterface = triangle.calculateNormal();
 
-            buffer += " facet normal " + normal.x + " " + normal.y + " " + normal.z + "\n";
-            buffer += "  outer loop\n";
-            buffer += "   vertex " + triangle.v1.x + " " + triangle.v1.y + " " + triangle.v1.z + "\n";
-            buffer += "   vertex " + triangle.v2.x + " " + triangle.v2.y + " " + triangle.v2.z + "\n";
-            buffer += "   vertex " + triangle.v3.x + " " + triangle.v3.y + " " + triangle.v3.z + "\n";
-            buffer += "  endloop\n";
-            buffer += " endfacet\n";
+            buffer +=
+                ' facet normal ' +
+                normal.x +
+                ' ' +
+                normal.y +
+                ' ' +
+                normal.z +
+                '\n';
+            buffer += '  outer loop\n';
+            buffer +=
+                '   vertex ' +
+                triangle.v1.x +
+                ' ' +
+                triangle.v1.y +
+                ' ' +
+                triangle.v1.z +
+                '\n';
+            buffer +=
+                '   vertex ' +
+                triangle.v2.x +
+                ' ' +
+                triangle.v2.y +
+                ' ' +
+                triangle.v2.z +
+                '\n';
+            buffer +=
+                '   vertex ' +
+                triangle.v3.x +
+                ' ' +
+                triangle.v3.y +
+                ' ' +
+                triangle.v3.z +
+                '\n';
+            buffer += '  endloop\n';
+            buffer += ' endfacet\n';
         });
-            
-        buffer += "endsolid " + name + "\n";
+
+        buffer += 'endsolid ' + name + '\n';
         return buffer;
     }
 
@@ -141,10 +181,10 @@ export class STLFile {
      * @param {buffer} buffer
      * @returns {boolean}
      */
-    _isBinary(buffer : Buffer) {
+    _isBinary(buffer: Buffer) {
         const MAX_ASCII_CHAR_CODE = 127;
         const header_size = 84;
-        const str = buffer.toString()
+        const str = buffer.toString();
 
         if (buffer.length <= header_size) {
             return false; // an empty binary STL must be at least 84 bytes
@@ -168,5 +208,4 @@ export class STLFile {
         const expected_size = header_size + n_faces * face_size;
         return buffer.length === expected_size;
     }
-
 }
