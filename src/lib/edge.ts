@@ -52,7 +52,7 @@ export class Edge {
     }
 
     static sortEdges(edges:Edge[]) : Edge[] {
-        var sortedEdges: Edge[] = edges.sort((edge1, edge2) => {
+        const sortedEdges: Edge[] = edges.sort((edge1, edge2) => {
             if (edge2.v1.isEqual(edge2.v2)) {
                 return 1;
             }

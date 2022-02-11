@@ -1,5 +1,6 @@
-import { Edge } from "./edge";
 import { VertexInterface } from "..";
+
+import { Edge } from "./edge";
 
 /**
  * Non-functional container class for unique Edges.
