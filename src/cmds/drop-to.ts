@@ -27,7 +27,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     let xOffset = 0; 
     let yOffset = 0; 

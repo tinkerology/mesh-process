@@ -32,7 +32,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const translatedMesh:MeshInterface = MeshOperations.translate(mesh, new Vertex(argv.x, argv.y, argv.z));
 

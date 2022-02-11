@@ -24,7 +24,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     let x = false; 
     let y = false; 

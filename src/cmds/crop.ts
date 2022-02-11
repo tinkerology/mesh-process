@@ -42,7 +42,7 @@ exports.builder = {
 }
 exports.handler = function (argv:any) {
   try {
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const boundingBox = new BoundingBox();
     boundingBox.minx = argv.minx;

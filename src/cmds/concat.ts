@@ -22,8 +22,8 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let mesh1:MeshInterface = MeshLoader.loadMesh(argv.infile1);
-    let mesh2:MeshInterface = MeshLoader.loadMesh(argv.infile2);
+    const mesh1:MeshInterface = MeshLoader.loadMesh(argv.infile1);
+    const mesh2:MeshInterface = MeshLoader.loadMesh(argv.infile2);
 
     mesh1.addMesh(mesh2);
     

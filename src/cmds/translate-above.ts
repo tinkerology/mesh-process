@@ -57,7 +57,7 @@ exports.handler = function (argv:any) {
       console.log("Z threshold set to max");
       argv.zThreshhold = Number.MAX_VALUE;
     }
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const translatedMesh:MeshInterface = MeshOperations.translateFiltered(mesh,
           new VertexFilterAbove(argv.xThreshold, argv.yThreshold, argv.zThreshold,

@@ -45,7 +45,7 @@ exports.builder = {
 
 exports.handler = function (argv:any) {
   try {
-    let mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
+    const mesh:MeshInterface = MeshLoader.loadMesh(argv.infile);
 
     const translatedMesh:MeshInterface = MeshOperations.filterVertices(mesh,
           new VertexFilterReplace(new Vertex(argv.xOrig, argv.yOrig, argv.zOrig),
