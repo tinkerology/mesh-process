@@ -1,6 +1,5 @@
-
-import { VertexInterface } from "..";
 import { Edge } from "./edge";
+import { VertexInterface } from "..";
 
 /**
  * Non-functional container class for unique Edges.
@@ -42,7 +41,7 @@ export class EdgeSet {
     }
 
     remove(e:Edge) : boolean {
-        let i = this.indexOf(e);
+        const i = this.indexOf(e);
         if ( i != -1 ) {
             this.edges.splice(i,1);
             return true;
@@ -116,7 +115,7 @@ export class EdgeSet {
     }
 
     sort() : EdgeSet {
-        var sortedEdges: Edge[] = this.edges.sort((edge1, edge2) => {
+        const sortedEdges: Edge[] = this.edges.sort((edge1, edge2) => {
             if (edge2.v1.isEqual(edge2.v2)) {
                 return 1;
             }
