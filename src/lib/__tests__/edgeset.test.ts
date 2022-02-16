@@ -143,6 +143,10 @@ test('sort', () => {
     const e2: Edge = new Edge(v2, v3);
     const e3: Edge = new Edge(v3, v4);
     const e4: Edge = new Edge(v4, v5);
+    const e1r: Edge = new Edge(v2, v1);
+    const e2r: Edge = new Edge(v3, v2);
+    const e3r: Edge = new Edge(v4, v3);
+    const e4r: Edge = new Edge(v5, v4);
     // Test already ordered
     {
         const edges1 = new EdgeSet([e1, e2, e3, e4]);
@@ -152,35 +156,53 @@ test('sort', () => {
         expect(sortedEdges1.edges[2].isEqual(e3));
         expect(sortedEdges1.edges[3].isEqual(e4));
     }
+    // Test already ordered reversed
+    {
+        const edges1 = new EdgeSet([e1, e2r, e3r, e4]);
+        const sortedEdges1 = edges1.sort();
+        expect(sortedEdges1.edges[0].isEqual(e1));
+        expect(sortedEdges1.edges[1].isEqual(e2));
+        expect(sortedEdges1.edges[2].isEqual(e3));
+        expect(sortedEdges1.edges[3].isEqual(e4));
+    }
+    // Test already ordered reversed2
+    {
+        const edges1 = new EdgeSet([e1r, e2r, e3r, e4r]);
+        const sortedEdges1 = edges1.sort();
+        expect(sortedEdges1.edges[0].isEqual(e1));
+        expect(sortedEdges1.edges[1].isEqual(e2));
+        expect(sortedEdges1.edges[2].isEqual(e3));
+        expect(sortedEdges1.edges[3].isEqual(e4));
+    }
 
     // Test reverse ordered
     {
-        const edges1 = [e4, e3, e2, e1];
-        const sortedEdges1 = Edge.sortEdges(edges1);
-        expect(sortedEdges1[0].isEqual(e1));
-        expect(sortedEdges1[1].isEqual(e2));
-        expect(sortedEdges1[2].isEqual(e3));
-        expect(sortedEdges1[3].isEqual(e4));
+        const edges1 = new EdgeSet([e4, e3, e2, e1]);
+        const sortedEdges1 = edges1.sort();
+        expect(sortedEdges1.edges[0].isEqual(e1));
+        expect(sortedEdges1.edges[1].isEqual(e2));
+        expect(sortedEdges1.edges[2].isEqual(e3));
+        expect(sortedEdges1.edges[3].isEqual(e4));
     }
 
     // Test mixed ordered 1
     {
-        const edges1 = [e3, e1, e2, e4];
-        const sortedEdges1 = Edge.sortEdges(edges1);
-        expect(sortedEdges1[0].isEqual(e1));
-        expect(sortedEdges1[1].isEqual(e2));
-        expect(sortedEdges1[2].isEqual(e3));
-        expect(sortedEdges1[3].isEqual(e4));
+        const edges1 = new EdgeSet([e3, e1, e2, e4]);
+        const sortedEdges1 = edges1.sort();
+        expect(sortedEdges1.edges[0].isEqual(e1));
+        expect(sortedEdges1.edges[1].isEqual(e2));
+        expect(sortedEdges1.edges[2].isEqual(e3));
+        expect(sortedEdges1.edges[3].isEqual(e4));
     }
 
     // Test mixed ordered 2
     {
-        const edges1 = [e3, e2, e1, e4];
-        const sortedEdges1 = Edge.sortEdges(edges1);
-        expect(sortedEdges1[0].isEqual(e1));
-        expect(sortedEdges1[1].isEqual(e2));
-        expect(sortedEdges1[2].isEqual(e3));
-        expect(sortedEdges1[3].isEqual(e4));
+        const edges1 = new EdgeSet([e3, e2, e1, e4]);
+        const sortedEdges1 = edges1.sort();
+        expect(sortedEdges1.edges[0].isEqual(e1));
+        expect(sortedEdges1.edges[1].isEqual(e2));
+        expect(sortedEdges1.edges[2].isEqual(e3));
+        expect(sortedEdges1.edges[3].isEqual(e4));
     }
 });
 
