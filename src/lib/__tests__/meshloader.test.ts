@@ -19,3 +19,9 @@ test('loadMesh_missing', () => {
         // Expected
     }
 });
+
+test('saveMesh', () => {
+    const mesh: MeshInterface = MeshLoader.loadMesh('samples/cube.stl');
+    expect(mesh.triangles.length).toBeGreaterThan(0);
+    MeshLoader.saveMesh(mesh, 'unit_test', 'samples/cube_unittest.stl');
+});
