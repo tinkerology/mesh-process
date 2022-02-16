@@ -56,21 +56,6 @@ export class Edge {
         return [];
     }
 
-    static sortEdges(edges: Edge[]): Edge[] {
-        const sortedEdges: Edge[] = edges.sort((edge1, edge2) => {
-            if (edge2.v1.isEqual(edge2.v2)) {
-                return 1;
-            }
-
-            if (edge1.v2.isEqual(edge2.v1)) {
-                return -1;
-            }
-
-            return 0;
-        });
-        return sortedEdges;
-    }
-
     static findMatchingEdges(edges1: Edge[], edges2: Edge[]): Edge[] {
         const matchingEdges: Edge[] = [];
         for (const edge1 of edges1) {
