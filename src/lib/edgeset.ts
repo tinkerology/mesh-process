@@ -119,12 +119,12 @@ export class EdgeSet {
 
     sort(): EdgeSet {
         const sortedEdges: Edge[] = this.edges.sort((edge1, edge2) => {
-            if (edge2.v1.isEqual(edge2.v2)) {
-                return 1;
+            if (edge2.v1.isEqual(edge1.v2)) {
+                return -1;
             }
 
-            if (edge1.v2.isEqual(edge2.v1)) {
-                return -1;
+            if (edge2.v2.isEqual(edge1.v1)) {
+                return 1;
             }
 
             return 0;
