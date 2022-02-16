@@ -1,5 +1,10 @@
 import { Matrix } from '../matrix';
 
+// Needed for 100% test coverage
+test('constructor', () => {
+    new Matrix();
+});
+
 test('matrixMultiply', () => {
     const m1: number[][] = Matrix.multiply(
         [
