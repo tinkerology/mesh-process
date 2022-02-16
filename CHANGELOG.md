@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/tinkerology/mesh-process/compare/v2.0.0...v3.0.0) (2022-02-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove sortEdges
+
+### Bug Fixes
+
+* Fixed sort issues ([a6b13cb](https://github.com/tinkerology/mesh-process/commit/a6b13cb70cd6f5c0b68d684d7e69893aebffa04b))
+
+
+* remove sortEdges ([314964e](https://github.com/tinkerology/mesh-process/commit/314964ef81047193fa3a819e58923dcb65ce9c04))
+
 ## [2.0.0](https://github.com/tinkerology/mesh-process/compare/v1.3.0...v2.0.0) (2022-02-11)
 
 
