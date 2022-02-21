@@ -96,6 +96,23 @@ export class MeshOperations {
         return mirroredMesh;
     }
 
+    static transform(
+        mesh: MeshInterface,
+        filter: VertexFilterInterface
+    ): MeshInterface {
+        const transformedMesh: MeshInterface = new Mesh();
+        mesh.triangles.forEach((triangle: TriangleInterface) => {
+            transformedMesh.addTriangle(
+                new Triangle(
+                    triangle.v1.add(filter.filter(triangle.v1)),
+                    triangle.v2.add(filter.filter(triangle.v2)),
+                    triangle.v3.add(filter.filter(triangle.v3))
+                )
+            );
+        });
+        return transformedMesh;
+    }
+
     static translate(
         mesh: MeshInterface,
         offset: VertexInterface
