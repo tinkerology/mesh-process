@@ -1,12 +1,12 @@
 import { all, create} from 'mathjs';
 
 import { MeshInterface } from '../lib/mesh';
+import { MeshInfo } from '../lib/meshinfo';
 import { MeshLoader } from '../lib/meshloader';
 import { MeshOperations } from '../lib/meshoperations';
 import { STLFile } from '../lib/stlfile';
 import { Vertex, VertexInterface } from '../lib/vertex';
 import { VertexFilterInterface } from '../lib/vertexfilter';
-import { MeshInfo } from '../lib/meshinfo';
 
 
 exports.command = 'transform [xtransform] [ytransform] [ztransform] [infile] [outfile]';
