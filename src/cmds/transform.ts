@@ -1,4 +1,4 @@
-import { all, create} from 'mathjs';
+import { all, create } from 'mathjs';
 
 import { MeshInterface } from '../lib/mesh';
 import { MeshInfo } from '../lib/meshinfo';
@@ -8,20 +8,20 @@ import { STLFile } from '../lib/stlfile';
 import { Vertex, VertexInterface } from '../lib/vertex';
 import { VertexFilterInterface } from '../lib/vertexfilter';
 
-
-exports.command = 'transform [xtransform] [ytransform] [ztransform] [infile] [outfile]';
+exports.command =
+    'transform [xtransform] [ytransform] [ztransform] [infile] [outfile]';
 exports.desc = 'Transform the specified STL file';
 exports.builder = {
-    xtransform: {   
-        default: "x",
+    xtransform: {
+        default: 'x',
         description: 'X axis translation',
     },
     ytransform: {
-        default: "y",
+        default: 'y',
         description: 'Y axis translation',
     },
     ztransform: {
-        default: "z",
+        default: 'z',
         description: 'Z axis translation',
     },
     infile: {
@@ -53,13 +53,26 @@ exports.handler = function (argv: any) {
             sizez: meshExtents.maxz - meshExtents.minz,
         };
 
-        const expTransform = new VertexFilterTransform(argv.xtransform,argv.ytransform,argv.ztransform, scope);
+        const expTransform = new VertexFilterTransform(
+            argv.xtransform,
+            argv.ytransform,
+            argv.ztransform,
+            scope
+        );
 
-        const translatedMesh: MeshInterface = MeshOperations.transform( mesh, expTransform );
-        
+        const translatedMesh: MeshInterface = MeshOperations.transform(
+            mesh,
+            expTransform
+        );
+
         new STLFile().writeSTLFile(
             argv.outfile,
-            'Transform_x' + argv.xtransform + '_y' + argv.ytransform + '_z' + argv.ztransform,
+            'Transform_x' +
+                argv.xtransform +
+                '_y' +
+                argv.ytransform +
+                '_z' +
+                argv.ztransform,
             translatedMesh
         );
     } catch (e) {
@@ -68,9 +81,9 @@ exports.handler = function (argv: any) {
 };
 
 class VertexFilterTransform implements VertexFilterInterface {
-    xExpression = "x";
-    yExpression = "y";
-    zExpression = "z";
+    xExpression = 'x';
+    yExpression = 'y';
+    zExpression = 'z';
 
     xExpressionParsed;
     yExpressionParsed;
@@ -78,7 +91,12 @@ class VertexFilterTransform implements VertexFilterInterface {
 
     scope;
 
-    constructor(xExpression:string, yExpression:string, zExpression:string, scope:any) {
+    constructor(
+        xExpression: string,
+        yExpression: string,
+        zExpression: string,
+        scope: any
+    ) {
         this.xExpression = xExpression;
         this.yExpression = yExpression;
         this.zExpression = zExpression;
@@ -88,7 +106,7 @@ class VertexFilterTransform implements VertexFilterInterface {
         this.xExpressionParsed = math.parse(this.xExpression);
         this.yExpressionParsed = math.parse(this.yExpression);
         this.zExpressionParsed = math.parse(this.zExpression);
-    
+
         this.scope = scope;
     }
 
@@ -97,8 +115,12 @@ class VertexFilterTransform implements VertexFilterInterface {
         this.scope.y = vertex.y;
         this.scope.z = vertex.z;
 
-        return vertex.add(new Vertex(this.xExpressionParsed.evaluate(this.scope),
-                                     this.yExpressionParsed.evaluate(this.scope),
-                                     this.zExpressionParsed.evaluate(this.scope)));
+        return vertex.add(
+            new Vertex(
+                this.xExpressionParsed.evaluate(this.scope),
+                this.yExpressionParsed.evaluate(this.scope),
+                this.zExpressionParsed.evaluate(this.scope)
+            )
+        );
     }
 }
