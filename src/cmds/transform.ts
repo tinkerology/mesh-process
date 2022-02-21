@@ -1,11 +1,13 @@
+import { all, create} from 'mathjs';
+
 import { MeshInterface } from '../lib/mesh';
 import { MeshLoader } from '../lib/meshloader';
 import { MeshOperations } from '../lib/meshoperations';
 import { STLFile } from '../lib/stlfile';
 import { Vertex, VertexInterface } from '../lib/vertex';
-import { create, all} from 'mathjs';
 import { VertexFilterInterface } from '../lib/vertexfilter';
 import { MeshInfo } from '../lib/meshinfo';
+
 
 exports.command = 'transform [xtransform] [ytransform] [ztransform] [infile] [outfile]';
 exports.desc = 'Transform the specified STL file';
