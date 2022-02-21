@@ -1,6 +1,6 @@
 {
   "name": "mesh-process",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "STL file reader/writer and mesh processing library",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

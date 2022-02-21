@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/tinkerology/mesh-process/compare/v3.0.0...v3.1.0) (2022-02-21)
+
+
+### Features
+
+* Added MathJS library ([9185e8c](https://github.com/tinkerology/mesh-process/commit/9185e8ccb1e6f7297d0c6edf8497b7b0423ee4de))
+* Added transform() ([1e3d0d3](https://github.com/tinkerology/mesh-process/commit/1e3d0d399e1142c8dbd235a78fdeeb2cbbc2c58f))
+* Transform command line with expression support ([22f9e80](https://github.com/tinkerology/mesh-process/commit/22f9e80f2ceaef0d108778cdc02d9dd237e37fb3))
+
 ## [3.0.0](https://github.com/tinkerology/mesh-process/compare/v2.0.0...v3.0.0) (2022-02-16)
 
 
