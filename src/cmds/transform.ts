@@ -1,12 +1,9 @@
-import { all, create } from 'mathjs';
-
 import { MeshInterface } from '../lib/mesh';
 import { MeshInfo } from '../lib/meshinfo';
 import { MeshLoader } from '../lib/meshloader';
 import { MeshOperations } from '../lib/meshoperations';
 import { STLFile } from '../lib/stlfile';
-import { Vertex, VertexInterface } from '../lib/vertex';
-import { VertexFilterInterface } from '../lib/vertexfilter';
+import { VertexFilterTransform } from '../lib/vertexfilter';
 
 exports.command =
     'transform [xtransform] [ytransform] [ztransform] [infile] [outfile]';
@@ -79,48 +76,3 @@ exports.handler = function (argv: any) {
         console.log('Error: Unable to load file\n', (e as Error).message);
     }
 };
-
-class VertexFilterTransform implements VertexFilterInterface {
-    xExpression = 'x';
-    yExpression = 'y';
-    zExpression = 'z';
-
-    xExpressionParsed;
-    yExpressionParsed;
-    zExpressionParsed;
-
-    scope;
-
-    constructor(
-        xExpression: string,
-        yExpression: string,
-        zExpression: string,
-        scope: any
-    ) {
-        this.xExpression = xExpression;
-        this.yExpression = yExpression;
-        this.zExpression = zExpression;
-
-        const math = create(all);
-
-        this.xExpressionParsed = math.parse(this.xExpression);
-        this.yExpressionParsed = math.parse(this.yExpression);
-        this.zExpressionParsed = math.parse(this.zExpression);
-
-        this.scope = scope;
-    }
-
-    filter(vertex: VertexInterface): VertexInterface {
-        this.scope.x = vertex.x;
-        this.scope.y = vertex.y;
-        this.scope.z = vertex.z;
-
-        return vertex.add(
-            new Vertex(
-                this.xExpressionParsed.evaluate(this.scope),
-                this.yExpressionParsed.evaluate(this.scope),
-                this.zExpressionParsed.evaluate(this.scope)
-            )
-        );
-    }
-}
