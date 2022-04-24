@@ -1,3 +1,5 @@
+import { all, create } from 'mathjs';
+
 import { VertexInterface } from './vertex';
 import { Vertex } from './vertex';
 
@@ -71,5 +73,50 @@ export class VertexFilterReplace implements VertexFilterInterface {
             return this.v2;
         }
         return vertex;
+    }
+}
+
+export class VertexFilterTransform implements VertexFilterInterface {
+    xExpression = 'x';
+    yExpression = 'y';
+    zExpression = 'z';
+
+    xExpressionParsed;
+    yExpressionParsed;
+    zExpressionParsed;
+
+    scope;
+
+    constructor(
+        xExpression: string,
+        yExpression: string,
+        zExpression: string,
+        scope: any
+    ) {
+        this.xExpression = xExpression;
+        this.yExpression = yExpression;
+        this.zExpression = zExpression;
+
+        const math = create(all);
+
+        this.xExpressionParsed = math.parse(this.xExpression);
+        this.yExpressionParsed = math.parse(this.yExpression);
+        this.zExpressionParsed = math.parse(this.zExpression);
+
+        this.scope = scope;
+    }
+
+    filter(vertex: VertexInterface): VertexInterface {
+        this.scope.x = vertex.x;
+        this.scope.y = vertex.y;
+        this.scope.z = vertex.z;
+
+        return vertex.add(
+            new Vertex(
+                this.xExpressionParsed.evaluate(this.scope),
+                this.yExpressionParsed.evaluate(this.scope),
+                this.zExpressionParsed.evaluate(this.scope)
+            )
+        );
     }
 }
