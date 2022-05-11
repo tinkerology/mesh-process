@@ -224,3 +224,25 @@ test('filterVertices', () => {
     const mesh2 = MeshOperations.filterVertices(mesh, new VertexFilterNoOp());
     expect(mesh2.triangles.length).toBe(2);
 });
+
+test('closeHoles_tooFewEdges', () => {
+    const mesh = MeshBuilder.buildRectangle(
+        new Vertex(0, 0, 0),
+        new Vertex(10, 0, 0),
+        new Vertex(10, 10, 0),
+        new Vertex(0, 10, 0)
+    );
+    expect(mesh.triangles.length).toBe(2);
+    MeshOperations.closeHoles(mesh, []);
+});
+
+test('closeHoles', () => {
+    const mesh = MeshBuilder.buildRectangle(
+        new Vertex(0, 0, 0),
+        new Vertex(10, 0, 0),
+        new Vertex(10, 10, 0),
+        new Vertex(0, 10, 0)
+    );
+    expect(mesh.triangles.length).toBe(2);
+    MeshOperations.closeHoles(mesh, MeshInfo.getEdges(mesh));
+});
