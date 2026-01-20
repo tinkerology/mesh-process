@@ -16,9 +16,11 @@ exports.handler = function (argv: any) {
         const mesh: MeshInterface = MeshLoader.loadMesh(argv.file);
         const triangleCount: number = mesh.triangles.length;
         const meshExtents: MeshExtents = MeshInfo.getExtents(mesh);
+        console.log("Counting single edges");
         const singleEdges: Edge[] = MeshInfo.getSingleEdges(
             MeshInfo.getEdges(mesh)
         );
+        console.log("Counting single edges done");
         console.log({
             file: argv.file,
             triangleCount: triangleCount,
