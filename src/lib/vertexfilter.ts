@@ -76,16 +76,38 @@ export class VertexFilterReplace implements VertexFilterInterface {
     }
 }
 
+export class VertexFilterMap implements VertexFilterInterface {
+    originalVertices: VertexInterface[];
+    newVertices: VertexInterface[];
+
+    constructor(
+        originalVertices: VertexInterface[],
+        newVertices: VertexInterface[]
+    ) {
+        this.originalVertices = originalVertices;
+        this.newVertices = newVertices;
+    }
+
+    filter(vertex: VertexInterface): VertexInterface {
+        const i = Vertex.findVertex(vertex, this.originalVertices);
+        if (i != -1) {
+            return this.newVertices[i];
+        }
+        // If we can't find the vertex, just return a copy of the original
+        return vertex.clone();
+    }
+}
+
 export class VertexFilterTransform implements VertexFilterInterface {
     xExpression = 'x';
     yExpression = 'y';
     zExpression = 'z';
 
-    xExpressionParsed;
-    yExpressionParsed;
-    zExpressionParsed;
+    xExpressionParsed: any;
+    yExpressionParsed: any;
+    zExpressionParsed: any;
 
-    scope;
+    scope: any;
 
     constructor(
         xExpression: string,
