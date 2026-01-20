@@ -2,6 +2,7 @@ import { Edge } from './edge';
 import { MeshInterface } from './mesh';
 import { TriangleInterface } from './triangle';
 import { VertexInterface } from './vertex';
+import { StatusLogger } from './statuslogger'; // Import StatusLogger
 
 export class MeshExtents {
     minx: number = Number.MAX_SAFE_INTEGER;
@@ -56,6 +57,7 @@ export class MeshInfo {
 
     static getEdges(mesh: MeshInterface): Edge[] {
         const allEdges: Edge[] = [];
+        console.log("getEdges ", mesh.triangles.length);
         mesh.triangles.forEach(function (triangle: TriangleInterface) {
             allEdges.push(...triangle.getEdges());
         });
@@ -63,22 +65,18 @@ export class MeshInfo {
     }
 
     static getSingleEdges(edges: Edge[]): Edge[] {
-        const singleEdges: Edge[] = [];
+        const edgeCountMap = new Map<string, number>();
+        const logger = new StatusLogger(1000);
+        // Count occurrences of each edge
         edges.forEach((edge: Edge) => {
-            let count = 0;
-            for (const edgeToCount of edges) {
-                if (edge.isEqual(edgeToCount)) {
-                    count++;
-                }
-                if (count > 1) {
-                    break;
-                }
-            }
-            if (count == 1) {
-                singleEdges.push(edge);
-            }
+            // console.log("Processing edge: ", edge.toString());
+            const edgeKey = edge.toString(); // Use the new toString method of Edge
+            edgeCountMap.set(edgeKey, (edgeCountMap.get(edgeKey) || 0) + 1);
+            logger.count()
         });
-        return singleEdges;
+
+        // Filter edges that appear only once
+        return edges.filter((edge: Edge) => edgeCountMap.get(edge.toString()) === 1);
     }
 
     static getEdgesAtVertex(edges: Edge[], vertex: VertexInterface): Edge[][] {
