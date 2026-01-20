@@ -1,3 +1,5 @@
+import { all, create } from 'mathjs';
+
 import { BoundingBox } from './boundingbox';
 import { Matrix } from './matrix';
 import { Util } from './util';
@@ -48,6 +50,23 @@ export class Vertex implements VertexInterface {
 
     isEqual(v: VertexInterface): boolean {
         if (v.x === this.x && v.y === this.y && v.z === this.z) {
+            return true;
+        }
+        return false;
+    }
+
+    isNear(v: VertexInterface, delta: number): boolean {
+        const config = {
+            epsilon: delta, // 1e-12
+        };
+
+        const math = create(all, config);
+
+        if (
+            math.compare(v.x, this.x) === 0 &&
+            math.compare(v.y, this.y) === 0 &&
+            math.compare(v.z, this.z) === 0
+        ) {
             return true;
         }
         return false;
@@ -140,5 +159,17 @@ export class Vertex implements VertexInterface {
             Util.round(this.y, digits),
             Util.round(this.z, digits)
         );
+    }
+
+    static findVertex(
+        toFind: VertexInterface,
+        vertices: VertexInterface[]
+    ): number {
+        for (let i = 0; i < vertices.length; i++) {
+            if (toFind.isEqual(vertices[i])) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
