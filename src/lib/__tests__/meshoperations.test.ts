@@ -56,9 +56,7 @@ test('crop', () => {
 });
 
 test('crop2', () => {
-    const mesh = MeshBuilder.buildCuboid(
-        new Vertex(0, 0, 0), 10, 10, 10
-    );
+    const mesh = MeshBuilder.buildCuboid(new Vertex(0, 0, 0), 10, 10, 10);
     expect(mesh.triangles.length).toBe(12);
     const scene1 = MeshOperations.crop(
         mesh,
@@ -66,7 +64,9 @@ test('crop2', () => {
     );
     expect(scene1.meshes.length).toBe(2);
     expect(scene1.meshes[MeshOperations.CROP_INSIDE].triangles.length).toBe(0);
-    expect(scene1.meshes[MeshOperations.CROP_OUTSIDE].triangles.length).toBe(12);
+    expect(scene1.meshes[MeshOperations.CROP_OUTSIDE].triangles.length).toBe(
+        12
+    );
 
     const scene2 = MeshOperations.crop(
         mesh,
@@ -74,7 +74,9 @@ test('crop2', () => {
     );
     expect(scene2.meshes.length).toBe(2);
     expect(scene2.meshes[MeshOperations.CROP_INSIDE].triangles.length).toBe(2);
-    expect(scene2.meshes[MeshOperations.CROP_OUTSIDE].triangles.length).toBe(10);
+    expect(scene2.meshes[MeshOperations.CROP_OUTSIDE].triangles.length).toBe(
+        10
+    );
 });
 
 test('mirror', () => {
@@ -109,7 +111,10 @@ test('transform', () => {
         new Vertex(0, 10, 0)
     );
     expect(mesh.triangles.length).toBe(2);
-    const mesh2 = MeshOperations.transform(mesh, new VertexFilterTransform("x", "y", "z", {}));
+    const mesh2 = MeshOperations.transform(
+        mesh,
+        new VertexFilterTransform('x', 'y', 'z', {})
+    );
     expect(mesh2.triangles.length).toBe(2);
 });
 
@@ -149,8 +154,12 @@ test('addVerticalTriangles', () => {
         new Vertex(0, 10, 0)
     );
     expect(mesh.triangles.length).toBe(2);
-    MeshOperations.addVerticalTriangles(mesh, MeshInfo.getSingleEdges(MeshInfo.getEdges(mesh)), 20);
-    expect(mesh.triangles.length).toBe(2+8);
+    MeshOperations.addVerticalTriangles(
+        mesh,
+        MeshInfo.getSingleEdges(MeshInfo.getEdges(mesh)),
+        20
+    );
+    expect(mesh.triangles.length).toBe(2 + 8);
 });
 
 test('addBaseAndVerticalTriangles', () => {
@@ -162,7 +171,7 @@ test('addBaseAndVerticalTriangles', () => {
     );
     expect(mesh.triangles.length).toBe(2);
     MeshOperations.addBaseAndVerticalTriangles(mesh, 20);
-    expect(mesh.triangles.length).toBe(2+8+2);
+    expect(mesh.triangles.length).toBe(2 + 8 + 2);
 });
 
 test('flipNormals', () => {
@@ -209,7 +218,10 @@ test('translateFiltered', () => {
         new Vertex(0, 10, 0)
     );
     expect(mesh.triangles.length).toBe(2);
-    const mesh2 = MeshOperations.translateFiltered(mesh, new VertexFilterNoOp());
+    const mesh2 = MeshOperations.translateFiltered(
+        mesh,
+        new VertexFilterNoOp()
+    );
     expect(mesh2.triangles.length).toBe(2);
 });
 
