@@ -8,6 +8,11 @@ manipulating STL files. The library is a set of Typescript functional classes.
 
 yarn build
 
+## Testing
+
+yarn run jtest
+yarn run jtestcov
+
 ## Syntax
 ```
 $ node meshtool 
