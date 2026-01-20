@@ -43,6 +43,13 @@ export class Edge {
         );
     }
 
+    toString(): string {
+        const v1Str = this.v1.toString();
+        const v2Str = this.v2.toString();
+        // Ensure consistent ordering of vertices in the string representation
+        return v1Str < v2Str ? `${v1Str}-${v2Str}` : `${v2Str}-${v1Str}`;
+    }
+
     static orderEdges(e1: Edge, e2: Edge): Edge[] {
         if (e1.v2.isEqual(e2.v1)) {
             return [e1, e2];
