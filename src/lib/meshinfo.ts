@@ -66,7 +66,7 @@ export class MeshInfo {
 
     static getSingleEdges(edges: Edge[]): Edge[] {
         const edgeCountMap = new Map<string, number>();
-        const logger = new StatusLogger(1000);
+        const logger = new StatusLogger(10000);
         // Count occurrences of each edge
         edges.forEach((edge: Edge) => {
             // console.log("Processing edge: ", edge.toString());
