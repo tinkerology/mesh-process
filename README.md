@@ -21,6 +21,9 @@ meshtool <command>
 Commands:
   meshtool about                            Print information about MeshTool
 
+  meshtool add-base [baseHeight] [infile]   Create an enclosed volumn for a 2D
+  [outfile]                                 mesh in the specified STL file
+
   meshtool center [location] [infile]       Center the specified STL file
   [outfile]
 
