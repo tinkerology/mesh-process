@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": false,
     "incremental": true,
     "target": "es2017",
     "outDir": "build/main",
